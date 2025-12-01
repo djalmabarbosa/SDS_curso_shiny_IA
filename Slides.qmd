@@ -1,0 +1,43 @@
+---
+title: "Introdução ao Shiny com R e IA"
+author: "Prof. Djalma Barbosa"
+institute: "Universidade Federal de Rondonópolis"
+date: today
+format:
+  revealjs:
+    theme: [default,custom.scss]
+    slide-number: false
+    chalkboard: true
+    preview-links: auto
+    logo: images/logoUFR.png
+    css: styles.css
+    footer: "Bioestatística com R e IA"
+    incremental: false
+    transition: slide
+    background-transition: fade
+    code-line-numbers: false
+    highlight-style: github
+---
+
+# Apresentação do Curso {background-color="#2C3E50"}
+
+## Objetivos do Curso
+
+::: incremental
+-   Apresentar conceitos relacionados à linguagem R
+-   Fazer uma introdução ao uso de aplicativos web com shiny
+-   Discutir como podemos incorporar IA na construção de aplicativos web
+:::
+
+------------------------------------------------------------------------
+
+
+
+:::incremental
+-   Você pode usar **Integração Progressiva** ou **Execução Única**
+-   Usar a IA para análise (bio)estatística é diferente de usar para perguntar coisas gerais. Requer:
+    -   Algum conhecimento prévio
+    -   Estrutura
+    -   Verificação crítica
+:::
+
