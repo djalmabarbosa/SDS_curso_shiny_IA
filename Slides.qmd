@@ -2600,6 +2600,8 @@ Universidade Federal de Rondonópolis
 ::: {style="text-align: center; margin-top: 200px;"}
 # Obrigado! {.r-fit-text}
 
+Os arquivos desta apresentação estão disponíveis em: https://github.com/djalmabarbosa/SDS_curso_shiny_IA
+
 Bons estudos e bons códigos! 🚀
 
 Perguntas?
