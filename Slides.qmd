@@ -7,6 +7,7 @@ institute: "Universidade Federal de Rondonópolis"
 date: today
 format:
   revealjs:
+    embed-resources: false
     theme: [default,custom.scss]
     slide-number: true
     chalkboard: true
@@ -31,6 +32,10 @@ format:
 -   Sugerir uma metodologia ativa para a criação de web apps com IA
 -   Propor a construção de web apps em um processo extensionista
 :::
+
+## Avaliação prévia
+
+![](images/qr_code_previo.png)
 
 ------------------------------------------------------------------------
 
@@ -1685,17 +1690,14 @@ ui <- fluidPage(
 :::
 
 ::: {.column width="50%"}
-
 ![](images/primeiro_app_sidebar.png)
-
 :::
 :::::
 
----
+------------------------------------------------------------------------
 
 ::::: columns
 ::: {.column width="50%"}
-
 ```{r}
 #| echo: true
 #| eval: false
@@ -1710,20 +1712,17 @@ ui <- fluidPage(
   )
 )
 ```
-
 :::
+
 ::: {.column width="50%"}
 ![](images/primeiro_app_abas.png)
 :::
 :::::
 
----
+------------------------------------------------------------------------
 
 ::::: columns
 ::: {.column width="50%"}
-
----
-
 ```{r}
 # Layout em colunas
 #| echo: true
@@ -1738,16 +1737,14 @@ ui <- fluidPage(
   )
 )
 ```
+:::
 
 ::: {.column width="50%"}
-
 ![](images/primeiro_app_colunas.png)
-
 :::
 :::::
 
-
-## Inputs Principais (1/2)
+## Inputs Principais {.scrollable}
 
 ```{r}
 #| echo: true
@@ -1770,7 +1767,9 @@ ui <- fluidPage(
 )
 ```
 
-## Inputs Principais (2/2)
+------------------------------------------------------------------------
+
+## Imputs principais {.scrollable}
 
 ```{r}
 #| echo: true
@@ -1796,7 +1795,7 @@ ui <- fluidPage(
 )
 ```
 
-## Outputs Principais
+## Outputs Principais {.scrollable}
 
 ```{r}
 #| echo: true
@@ -1888,205 +1887,6 @@ shinyApp(ui, server)
 :::
 :::::
 
-## Acessando Inputs
-
-```{r}
-#| echo: true
-#| eval: false
-
-server <- function(input, output) {
-  
-  # Acessar valor de input
-  output$texto <- renderText({
-    # input$id_do_input
-    paste("Você digitou:", input$nome)
-  })
-  
-  # ERRO: não acesse inputs fora de contexto reativo
-  # x <- input$nome  # NÃO FUNCIONA!
-  
-  # CORRETO: dentro de render* ou reactive()
-  output$resultado <- renderText({
-    x <- input$nome  # OK aqui
-    paste("Olá,", x)
-  })
-}
-```
-
-## render\*(): Criando Outputs
-
-```{r}
-#| echo: true
-#| eval: false
-
-server <- function(input, output) {
-  
-  # Texto
-  output$texto <- renderText({
-    paste("Resultado:", input$valor * 2)
-  })
-  
-  # Gráfico
-  output$grafico <- renderPlot({
-    hist(rnorm(input$n))
-  })
-  
-  # Tabela
-  output$tabela <- renderTable({
-    data.frame(x = 1:input$n, y = rnorm(input$n))
-  })
-  
-  # Print (console output)
-  output$resumo <- renderPrint({
-    summary(rnorm(input$n))
-  })
-}
-```
-
-## reactive(): Valores Intermediários
-
-```{r}
-#| echo: true
-#| eval: false
-
-server <- function(input, output) {
-  
-  # Criar valor reativo (executado quando inputs mudam)
-  dados_filtrados <- reactive({
-    mtcars %>% 
-      filter(cyl == input$cilindros) %>% 
-      filter(mpg > input$mpg_minimo)
-  })
-  
-  # Usar em múltiplos outputs (chame com parênteses!)
-  output$grafico <- renderPlot({
-    ggplot(dados_filtrados(), aes(x = wt, y = mpg)) +
-      geom_point()
-  })
-  
-  output$tabela <- renderTable({
-    dados_filtrados()
-  })
-  
-  output$resumo <- renderPrint({
-    summary(dados_filtrados())
-  })
-}
-```
-
-## isolate(): Quebrar Reatividade
-
-```{r}
-#| echo: true
-#| eval: false
-
-server <- function(input, output) {
-  
-  output$resultado <- renderText({
-    # Este output DEPENDE de input$x (reativo)
-    x <- input$x
-    
-    # Este output NÃO DEPENDE de input$y (isolado)
-    y <- isolate(input$y)
-    
-    paste("x =", x, ", y =", y)
-  })
-  # O output só atualiza quando input$x muda
-  # Mudanças em input$y são ignoradas
-}
-```
-
-::: callout-tip
-## Quando usar isolate()
-
-Use quando quiser ler um valor reativo sem criar uma dependência.
-:::
-
-## observeEvent(): Reagir a Eventos
-
-```{r}
-#| echo: true
-#| eval: false
-
-server <- function(input, output) {
-  
-  # Executar código quando botão é clicado
-  observeEvent(input$calcular, {
-    # Código aqui executa APENAS quando botão é clicado
-    showNotification("Cálculo realizado!")
-  })
-  
-  # Executar quando input específico muda
-  observeEvent(input$dataset, {
-    # Carregar novos dados quando usuário seleciona dataset
-    dados <- read.csv(paste0(input$dataset, ".csv"))
-  })
-  
-  # Múltiplos gatilhos
-  observeEvent(c(input$x, input$y), {
-    print("X ou Y mudou!")
-  })
-}
-```
-
-## eventReactive(): Valor Reativo com Gatilho
-
-```{r}
-#| echo: true
-#| eval: false
-
-ui <- fluidPage(
-  numericInput("n", "Tamanho da amostra:", 100),
-  actionButton("gerar", "Gerar Dados"),
-  plotOutput("grafico")
-)
-
-server <- function(input, output) {
-  
-  # Dados só atualizam quando botão é clicado
-  dados <- eventReactive(input$gerar, {
-    rnorm(input$n)
-  })
-  
-  output$grafico <- renderPlot({
-    # Usa dados() que só muda quando botão é clicado
-    hist(dados())
-  })
-  
-  # Mesmo que input$n mude, os dados não atualizam
-  # até que o botão seja clicado novamente
-}
-```
-
-## Exemplo: Controle de Reatividade
-
-```{r}
-#| echo: true
-#| eval: false
-
-ui <- fluidPage(
-  sliderInput("n", "N:", 10, 1000, 100),
-  actionButton("atualizar", "Atualizar Gráfico"),
-  plotOutput("grafico")
-)
-
-server <- function(input, output) {
-  
-  # Dados só atualizam ao clicar no botão
-  dados_gerados <- eventReactive(input$atualizar, {
-    rnorm(input$n)  # Usa valor ATUAL de input$n
-  })
-  
-  output$grafico <- renderPlot({
-    hist(dados_gerados(), breaks = 30,
-         main = paste("N =", length(dados_gerados())))
-  })
-}
-
-# Usuário pode ajustar N sem regerar os dados
-# Dados só mudam ao clicar "Atualizar Gráfico"
-```
-
 # 10. IA e Prompting para R/Shiny {background-color="#2C3E50"}
 
 ## Como a IA Pode Ajudar
@@ -2115,6 +1915,10 @@ server <- function(input, output) {
 :::::
 
 ## Anatomia de um Bom Prompt
+
+::: callout-note
+**CRAFT** (Context, Role, Action, Format, Tone)
+:::
 
 ::: callout-note
 ## Estrutura recomendada
@@ -2226,6 +2030,8 @@ adequadamente? [colar código]"
 
 ## Iterando com a IA
 
+Em muitos momentos é interessante abordar uma tarefa por vez
+
 ::: incremental
 1.  **Primeira tentativa** - Peça o código básico
 2.  **Teste** - Execute e veja o que funciona
@@ -2234,6 +2040,8 @@ adequadamente? [colar código]"
 5.  **Otimize** - "Como deixo este código mais eficiente?"
 6.  **Documente** - "Adicione comentários explicando cada seção"
 :::
+
+------------------------------------------------------------------------
 
 ::: callout-tip
 ## Dica importante
@@ -2270,6 +2078,8 @@ Quando uso cada um?"
 ::: callout-warning
 ## SEMPRE verifique o código da IA!
 :::
+
+---
 
 **Checklist de verificação:**
 
@@ -2588,13 +2398,11 @@ server <- function(input, output) {
 
 **Onde buscar ajuda:**
 
-::: incremental
 -   [Stack Overflow](https://stackoverflow.com/questions/tagged/r) (tag: r, shiny)
 -   [RStudio Community](https://community.rstudio.com/)
 -   [Reddit r/rstats](https://www.reddit.com/r/rstats/)
 -   [R-Ladies](https://rladies.org/) (comunidades locais)
 -   [Posit Community](https://forum.posit.co/)
-:::
 
 **Dica:** Ao postar perguntas, use exemplos reproduzíveis (reprex)!
 
@@ -2672,41 +2480,35 @@ IA é uma ferramenta, não um substituto para aprendizado!
 5.  **Itere constantemente** - refatore, melhore
 :::
 
-## Projeto Final Sugerido
+# 13. Projeto aplicado {background-color="#2C3E50"}
 
-**Crie um app Shiny completo:**
+## Projeto Final Sugerido {.scrollable}
 
-::: incremental
-1.  **Tenha uma ideia**
+**Crie um app Shiny completo**
+
+1.  **Tenha uma ideia para resolver um problema da sociedade**
     -   Veja exemplos se precisar de inspiração
         -   https://shiny.posit.co/r/gallery/
     -   Pense simples, e aumente complexidade se necessário
-2.  **Planeje funcionalidades:**
+2.  **Pense em algumas funcionalidades:**
     -   Upload de dados OU usar dados incluídos
     -   Filtros interativos
     -   Visualizações
     -   Gerar tabelas
     -   Download de resultados
-:::
-
-------------------------------------------------------------------------
-
-::: incremental
 3.  **Desenvolva iterativamente** com ajuda de IA
-    -   Tive essa ideia para um R shiny app: ... Vc acha viável?
-    -   Me ajude a estabelecer as característics
 4.  **Documente seu código**
 5.  **Teste com sua família ou colegas**
 6.  **Publique** (não obrigatório) (shinyapps.io, GitHub)
-:::
 
-# 13. Projeto Aplicado {background-color="#2C3E50"}
+## Desenvolvendo iterativamente com ajuda de IA {.scrollable}
 
-## Desenvolva iterativamente com ajuda de IA {.scrollable}
+Use a IA para te ajudar a estabelecer cada um dos seguintes pontos:
 
 1.  CONTEXTO
     -   Quem vai usar o app? (público alvo)
     -   Qual o problema que resolve?
+    -   Você acha que essa ideia que eu tive é viável para um aplicativo web? Por quê?
 2.  DADOS
     -   De onde vêm os dados?
     -   Qual a estrutura (colunas, tipos)?
@@ -2723,76 +2525,16 @@ IA é uma ferramenta, não um substituto para aprendizado!
     -   Estilo visual
     -   Validações necessárias
 
-# 14. Conclusão {background-color="#2C3E50"}
-
-## Recapitulando
-
-**Você aprendeu:**
-
-::: incremental
--   Fundamentos do R (tipos, estruturas, funções)
--   Manipulação de dados com dplyr
--   Visualização com ggplot2
--   Estrutura e reatividade do Shiny
--   Inputs, outputs e controle de fluxo
--   Como usar IA efetivamente
--   Boas práticas de programação
-:::
-
-## Lições-Chave
-
-::: callout-tip
-## Principais takeaways
-
-1.  **R + Shiny** permite criar aplicações web sem conhecer web development
-2.  **Reatividade** é automática, mas você pode controlá-la
-3.  **IA** acelera desenvolvimento, mas requer conhecimento base
-4.  **Prática** é essencial - código não se aprende só lendo
-5.  **Comunidade** R é grande e prestativa - use-a!
-:::
-
-## Próximos Passos
-
-::: callout-note
-## Recomendações
-
-1.  **Pratique imediatamente** - crie um app simples hoje
-2.  **Use IA como tutor** - peça explicações, não só código
-3.  **Leia código de outros** - GitHub está cheio de exemplos
-4.  **Compartilhe seu trabalho** - receba feedback
-5.  **Continue aprendendo** - R e Shiny evoluem constantemente
-:::
-
-## Contato e Recursos
+# 14. Obrigado! {background-color="#2C3E50"}
 
 ::::: columns
 ::: {.column width="50%"}
-**Professor:**
-
-Prof. Djalma Barbosa
-
-Universidade Federal de Rondonópolis
+**Prof. Djalma Barbosa** djalma.barbosa\@ufr.edu.br Universidade Federal de Rondonópolis
 :::
 
 ::: {.column width="50%"}
 **Materiais do curso:**
 
--   Slides
--   Código dos exemplos
--   Lista de recursos
+https://github.com/djalmabarbosa/SDS_curso_shiny_IA
 :::
 :::::
-
-##  {background-color="#2C3E50"}
-
-::: {style="text-align: center; margin-top: 200px;"}
-# 15. Obrigado! {.r-fit-text}
-
-Os arquivos desta apresentação estão disponíveis em: https://github.com/djalmabarbosa/SDS_curso_shiny_IA
-
-Bons estudos e bons códigos! 🚀
-
-Perguntas?
-:::
-::::::::::::::::::::::::::::::::::::::::
-::::::::::::::::::::::::::::::::::::::::::
