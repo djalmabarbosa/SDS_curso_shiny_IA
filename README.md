@@ -72,31 +72,27 @@ Este curso é uma ação de extensão do projeto Saúde Data Science, da Univers
 - Funções `reactive()`, `observeEvent()` e `eventReactive()`
 - Controle fino de reatividade com `isolate()`
 
-### 10. Shiny - Recursos Avançados
-- Upload e download de arquivos
-- Validação e tratamento de erros
-- Interface dinâmica com `renderUI()`
-- Notificações e modais
-
-### 11. IA e Prompting para R/Shiny
+### 10. IA e Prompting para R/Shiny
 - Como usar IA efetivamente no desenvolvimento
 - Estrutura de prompts eficazes
 - Debugging com IA
 - Iteração e refinamento de código
 - Limitações e cuidados
 
-### 12. Boas Práticas
+### 11. Boas Práticas
 - Organização de código e projetos
 - Comentários e documentação
 - Performance e otimização
 - Segurança básica
 - Tratamento de erros
 
-### 13. Recursos e Próximos Passos
+### 12. Recursos e Próximos Passos
 - Documentação oficial e comunidades
 - Tutoriais e cursos recomendados
 - Ferramentas de IA para desenvolvimento
 - Projeto final
+
+ ### 13. Projeto aplicado
 
 ## 🛠️ Pré-requisitos
 
