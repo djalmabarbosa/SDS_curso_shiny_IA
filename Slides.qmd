@@ -1,6 +1,8 @@
 ---
 title: "Introdução ao Shiny com R e IA"
-author: "Prof. Djalma Barbosa"
+author: 
+  Prof. Djalma Barbosa  
+  *(Projeto de Extensão Saúde Data Science)*
 institute: "Universidade Federal de Rondonópolis"
 date: today
 format:
@@ -25,8 +27,9 @@ format:
 
 ::: incremental
 -   Apresentar conceitos relacionados à linguagem R
--   Fazer uma introdução ao uso de aplicativos web com shiny
--   Discutir como podemos incorporar IA na construção de aplicativos web
+-   Introduzir a elaboração de softwares (aplicativos web) com R e shiny
+-   Sugerir uma metodologia ativa para a criação de web apps com IA
+-   Propor a construção de web apps em um processo extensionista
 :::
 
 ------------------------------------------------------------------------
@@ -97,7 +100,7 @@ format:
 -   **R Markdown/Quarto** - Executar chunks
 :::
 
----
+------------------------------------------------------------------------
 
 ::: callout-tip
 Sempre trabalhe com scripts (.R) para salvar seu trabalho! Evite trabalhar apenas no Console.
@@ -128,88 +131,6 @@ meu_projeto/
   ├── docs/           # Documentação
   └── README.md       # Descrição do projeto
 ```
-
-## Positron: A Nova Geração
-
-::::: columns
-::: {.column width="50%"}
-**Positron (novo IDE da Posit)**
-
--   Interface moderna e rápida
--   Suporte nativo a R e Python
--   Editor de dados avançado
--   Console aprimorado
--   Integração com IA
--   Código aberto
-:::
-
-::: {.column width="50%"}
-**Quando usar:**
-
--   Se busca interface moderna
--   Trabalha com R e Python
--   Quer recursos de última geração
--   Prefere performance otimizada
-
-**Status:** Beta público
-
-[positron.posit.co](https://positron.posit.co)
-:::
-:::::
-
-## Outras Opções: VS Code
-
-::::: columns
-::: {.column width="50%"}
-**Visual Studio Code + R**
-
--   Editor leve e moderno
--   Extensões: R, R LSP
--   Terminal integrado
--   Git nativo
--   Comunidade ativa
-:::
-
-::: {.column width="50%"}
-**Quando usar:**
-
--   Se já usa VS Code
--   Trabalha com múltiplas linguagens
--   Prefere interface minimalista
--   Projetos de desenvolvimento web
-:::
-:::::
-
-::: callout-note
-Para iniciantes, RStudio ainda é mais recomendado!
-:::
-
-## Outras Opções: Posit Cloud
-
-::::: columns
-::: {.column width="50%"}
-**Posit Cloud (RStudio na nuvem)**
-
--   Sem instalação necessária
--   Acesso via navegador
--   Colaboração facilitada
--   Recursos limitados (plano free)
--   Ideal para ensino
-:::
-
-::: {.column width="50%"}
-**Link:**
-
-[posit.cloud](https://posit.cloud)
-
-**Quando usar:**
-
--   Computador sem R instalado
--   Demonstrações rápidas
--   Ensino e workshops
--   Colaboração temporária
-:::
-:::::
 
 ## Scripts vs. Console vs. R Markdown
 
@@ -251,6 +172,9 @@ Mais texto e resultados.
 -   `Ctrl/Cmd + Shift + C` - Comentar/descomentar
 -   `Tab` - Autocompletar
 -   `Ctrl/Cmd + ↑` - Histórico de comandos
+
+## Atalhos Úteis no RStudio
+
 -   `Ctrl/Cmd + L` - Limpar console
 -   `Ctrl/Cmd + Shift + F10` - Reiniciar R
 
@@ -281,17 +205,399 @@ Ver todos: Tools \> Keyboard Shortcuts Help
 :::
 :::::
 
-```{r}
-#| echo: true
-#| eval: false
-# Sempre inicie scripts assim:
-rm(list = ls())  # Limpar ambiente
-library(pacote1)
-library(pacote2)
-# ... seu código
-```
+# 2. O que é Shiny?
 
-# 2. Fundamentos Básicos do R {background-color="#2C3E50"}
+::: incremental
+-   **Shiny** é um framework para criar aplicações web (R ou Python)
+-   São softwares simples, mas poderosos
+-   No projeto Saúde Data Science pensamos esta construção dentro de um processo extensionista
+    1.  Ideia que resolve um problema/demanda da sociedade
+    2.  Uso de IA para validação, elaboração e melhoria
+    3.  Interação dialógica com a sociedade
+    4.  Refinamento e deploy
+:::
+
+------------------------------------------------------------------------
+
+![Processo de iteração dialógica para elaboração de sofware.\
+Fonte: ideia do autor, criado com Gemini](images/Ciclo_de_criacao.png){fig-align="center"}
+
+------------------------------------------------------------------------
+
+### Vantagens do Shiny com R
+
+::: callout-tip
+**✅ Sem necessidade de conhecer web development em profundidade (HTML/CSS/JavaScript)**
+
+**✅ Iterativdade automática**
+
+**✅ Totalmente em R**
+
+**✅ Gratuito e open-source**
+
+**✅ Comunidade ativa e muitos exemplos**
+
+**✅ Deploy facilitado (shinyapps.io, servidor próprio)**
+
+**✅ Integração com todo ecossistema R (pacotes, gráficos, modelos)**
+:::
+
+## O que Posso Fazer com Shiny?
+
+------------------------------------------------------------------------
+
+### Visualização Interativa de Dados
+
+::::: columns
+::: {.column width="50%"}
+**Dashboards analíticos:**
+
+-   Gráficos que atualizam em tempo real
+-   Filtros dinâmicos para explorar dados
+-   KPIs (Indicador-Chave de Desempenho)
+-   Comparações entre períodos/grupos
+-   Drill-down (perfuramento) em dados detalhados
+:::
+
+::: {.column width="50%"}
+**Exemplos:**
+
+-   Dashboard de vendas por região
+-   Monitoramento de indicadores
+-   Análise de dados financeiros
+-   Visualização de resultados de pesquisas
+-   Painel de métricas de marketing
+:::
+:::::
+
+------------------------------------------------------------------------
+
+### Ferramentas de Análise Estatística
+
+::::: columns
+::: {.column width="50%"}
+**Análises sem código:**
+
+-   Upload de dados pelo usuário
+-   Testes estatísticos automáticos
+-   Análise exploratória interativa
+-   Modelagem preditiva
+-   Visualização de resultados
+-   Download de relatórios
+:::
+
+::: {.column width="50%"}
+**Exemplos:**
+
+-   Calculadora de tamanho amostral
+-   Ferramenta de testes de hipótese
+-   Análise de regressão interativa
+-   Comparação de modelos ML
+-   Análise de sobrevivência
+:::
+:::::
+
+------------------------------------------------------------------------
+
+### Calculadoras e Simuladores
+
+::::: columns
+::: {.column width="50%"}
+**Cálculos interativos:**
+
+-   Inputs do usuário via sliders/campos
+-   Cálculos instantâneos
+-   Visualização de resultados
+-   Comparação de cenários
+-   Exportação de resultados
+:::
+
+::: {.column width="50%"}
+**Exemplos:**
+
+-   Calculadora de IMC
+-   Simulador de investimentos
+-   Calculadora de dose de medicamento
+-   Estimador de risco
+-   Conversor de unidades
+-   Calculadora de amostragem
+:::
+:::::
+
+------------------------------------------------------------------------
+
+### Relatórios Dinâmicos
+
+::::: columns
+::: {.column width="50%"}
+**Geração automática:**
+
+-   Relatórios parametrizados
+-   Atualização com novos dados
+-   Múltiplos formatos (PDF, Word, HTML)
+-   Gráficos e tabelas customizáveis
+-   Download com um clique
+:::
+
+::: {.column width="50%"}
+**Exemplos:**
+
+-   Relatório mensal de vendas
+-   Boletim epidemiológico
+-   Análise de resultados acadêmicos
+-   Relatório de experimentos
+-   Sumário executivo automatizado
+:::
+:::::
+
+------------------------------------------------------------------------
+
+### Coleta e Validação de Dados
+
+::::: columns
+::: {.column width="50%"}
+**Formulários interativos:**
+
+-   Entrada de dados estruturada
+-   Validação em tempo real
+-   Salvamento em banco de dados
+-   Upload de arquivos
+-   Confirmação visual
+:::
+
+::: {.column width="50%"}
+**Exemplos:**
+
+-   Formulário de cadastro
+-   Questionário de pesquisa
+-   Sistema de registro de pacientes
+-   Coleta de dados experimentais
+-   Avaliação de satisfação
+:::
+:::::
+
+------------------------------------------------------------------------
+
+### Ferramentas Educacionais
+
+::::: columns
+::: {.column width="50%"}
+**Aprendizado interativo:**
+
+-   Demonstrações de conceitos
+-   Simulações estatísticas
+-   Visualização de algoritmos
+-   Experimentos virtuais
+-   Tutoriais guiados
+:::
+
+::: {.column width="50%"}
+**Exemplos:**
+
+-   Teorema Central do Limite (animado)
+-   Visualização de distribuições
+-   Simulador de testes de hipótese
+-   Demonstração de regressão
+-   Explicação de intervalos de confiança
+:::
+:::::
+
+------------------------------------------------------------------------
+
+### Integração com Bancos de Dados
+
+::::: columns
+::: {.column width="50%"}
+**Acesso a dados em tempo real:**
+
+-   Consultas a bancos SQL
+-   Atualização automática
+-   Múltiplos usuários simultâneos
+-   Filtros complexos
+-   Agregações dinâmicas
+:::
+
+::: {.column width="50%"}
+**Exemplos:**
+
+-   Painel de estoque em tempo real
+-   Monitor de transações
+-   Sistema de consulta de pacientes
+-   Dashboard de logística
+-   Análise de logs de sistema
+:::
+:::::
+
+------------------------------------------------------------------------
+
+### Aplicações de Machine Learning
+
+::::: columns
+::: {.column width="50%"}
+**Modelos preditivos:**
+
+-   Interface para treinamento de modelos
+-   Predições em tempo real
+-   Comparação de algoritmos
+-   Visualização de performance
+-   Interpretação de resultados
+:::
+
+::: {.column width="50%"}
+**Exemplos:**
+
+-   Classificador de imagens
+-   Preditor de churn de clientes
+-   Diagnóstico assistido
+-   Recomendador de produtos
+-   Detector de anomalias
+:::
+:::::
+
+------------------------------------------------------------------------
+
+### Mapas e Dados Geoespaciais
+
+::::: columns
+::: {.column width="50%"}
+**Visualização geográfica:**
+
+-   Mapas interativos
+-   Marcadores dinâmicos
+-   Filtros por região
+-   Heatmaps
+-   Análise espacial
+:::
+
+::: {.column width="50%"}
+**Exemplos:**
+
+-   Mapa de casos de doenças
+-   Distribuição de vendas por região
+-   Localizador de estabelecimentos
+-   Análise demográfica
+-   Monitoramento ambiental
+:::
+:::::
+
+------------------------------------------------------------------------
+
+### Monitoramento em Tempo Real
+
+::::: columns
+::: {.column width="50%"}
+**Acompanhamento contínuo:**
+
+-   Atualização automática de dados
+-   Alertas e notificações
+-   Indicadores críticos em destaque
+-   Histórico de mudanças
+-   Comparação com metas
+:::
+
+::: {.column width="50%"}
+**Exemplos:**
+
+-   Monitor de servidor/sistema
+-   Acompanhamento de experimentos
+-   Dashboard de produção
+-   Rastreamento de KPIs
+-   Monitor de redes sociais
+:::
+:::::
+
+------------------------------------------------------------------------
+
+### Comparação e Benchmarking
+
+::::: columns
+::: {.column width="50%"}
+**Análises comparativas:**
+
+-   Comparar múltiplos cenários
+-   Análise antes/depois
+-   Benchmarking entre grupos
+-   Simulação de "what-if"
+-   Visualização de diferenças
+:::
+
+::: {.column width="50%"}
+**Exemplos:**
+
+-   Comparar performance de produtos
+-   A/B testing visualização
+-   Benchmark de tratamentos médicos
+-   Comparação de estratégias
+-   Análise de competitividade
+:::
+:::::
+
+------------------------------------------------------------------------
+
+### Galeria de Inspiração
+
+::::: columns
+::: {.column width="50%"}
+**Onde encontrar exemplos:**
+
+-   [Shiny Gallery](https://shiny.posit.co/r/gallery/)
+-   [RStudio Blog](https://posit.co/blog/)
+-   GitHub (busque "shiny app")
+-   [Shiny Contest](https://posit.co/blog/shiny-contest-2024/)
+:::
+
+::: {.column width="50%"}
+**Dica:**
+
+Explore apps existentes para:
+
+-   Ver o que é possível
+-   Aprender técnicas novas
+-   Inspirar-se para seus projetos
+-   Adaptar código para suas necessidades
+:::
+:::::
+
+## Limitações e Considerações
+
+**Shiny pode não ser ideal para:**
+
+::: incremental
+-   Sites estáticos (use R Markdown/Quarto)
+-   Apps com milhões de usuários simultâneos
+-   Aplicações que precisam funcionar offline
+-   Interfaces extremamente complexas (considere frameworks web)
+:::
+
+# 3. Fundamentos Básicos do R {background-color="#2C3E50"}
+
+------------------------------------------------------------------------
+
+::: callout-tip
+Vamos somente prestar atenção para ganhar entendimento.\
+Depois vocês devem replicar o código em casa.\
+No final faremos uma prática!
+:::
+
+------------------------------------------------------------------------
+
+## Objetos
+
+::: incremental
+O R possui 5 *classes básicas (atômicas)* de objetos:
+
+1.  caracter\
+2.  numérico (números reais)\
+3.  inteiro\
+4.  complexo\
+5.  lógico (verdadeiro/falso)
+:::
+
+------------------------------------------------------------------------
+
+::: callout-important
+Tudo que vem a seguir tem como origem essas classes de objetos
+:::
 
 ## Operações e Atribuição
 
@@ -332,7 +638,7 @@ cidade <- 'São Paulo'
 aprovado <- TRUE
 ativo <- FALSE
 
-# Verificar tipo
+# Verificar tipo (uso de funções)
 class(idade)    # "numeric"
 typeof(nome)    # "character"
 ```
@@ -418,7 +724,7 @@ dim(dados)         # Dimensões (linhas, colunas)
 names(dados)       # Nomes das colunas
 ```
 
-# 3. Manipulação de Dados {background-color="#2C3E50"}
+# 4. Manipulação de Dados {background-color="#2C3E50"}
 
 ## Pacote dplyr: Introdução
 
@@ -616,7 +922,7 @@ dados <- read.csv("arquivo.txt", sep = ";")
 dados <- read_csv("arquivo.csv", skip = 2)
 ```
 
-# 4. Visualização de Dados {background-color="#2C3E50"}
+# 5. Visualização de Dados {background-color="#2C3E50"}
 
 ## ggplot2: Filosofia de Camadas
 
@@ -648,6 +954,8 @@ ggplot(dados) +        # 1. Dados
 
 ## ggplot2: Gráfico de Dispersão
 
+::::: columns
+::: {.column width="50%"}
 ```{r}
 #| echo: true
 #| eval: false
@@ -668,9 +976,38 @@ ggplot(dados, aes(x = altura, y = peso)) +
   ) +
   theme_minimal()
 ```
+:::
+
+::: {.column width="50%"}
+```{r}
+#| echo: false
+#| eval: true
+#| fig-width: 6
+#| fig-height: 5
+
+library(ggplot2)
+
+dados <- data.frame(
+  altura = c(150, 160, 170, 180, 190),
+  peso = c(50, 60, 70, 80, 90)
+)
+
+ggplot(dados, aes(x = altura, y = peso)) +
+  geom_point(size = 3, color = "blue") +
+  labs(
+    title = "Relação entre Altura e Peso",
+    x = "Altura (cm)",
+    y = "Peso (kg)"
+  ) +
+  theme_minimal()
+```
+:::
+:::::
 
 ## ggplot2: Gráfico de Linhas
 
+::::: columns
+::: {.column width="50%"}
 ```{r}
 #| echo: true
 #| eval: false
@@ -691,9 +1028,38 @@ ggplot(vendas, aes(x = mes, y = valor)) +
   ) +
   theme_light()
 ```
+:::
+
+::: {.column width="50%"}
+```{r}
+#| echo: false
+#| eval: true
+#| fig-width: 6
+#| fig-height: 5
+
+vendas <- data.frame(
+  mes = 1:12,
+  valor = c(100, 120, 115, 140, 135, 150, 
+            165, 170, 160, 180, 190, 200)
+)
+
+ggplot(vendas, aes(x = mes, y = valor)) +
+  geom_line(color = "darkgreen", size = 1) +
+  geom_point(color = "darkgreen", size = 3) +
+  labs(
+    title = "Vendas Mensais",
+    x = "Mês",
+    y = "Valor (R$)"
+  ) +
+  theme_light()
+```
+:::
+:::::
 
 ## ggplot2: Gráfico de Barras
 
+::::: columns
+::: {.column width="50%"}
 ```{r}
 #| echo: true
 #| eval: false
@@ -715,9 +1081,36 @@ ggplot(categorias, aes(x = grupo, y = frequencia)) +
 # Para dados brutos (contar automaticamente)
 # geom_bar() sem stat = "identity"
 ```
+:::
+
+::: {.column width="50%"}
+```{r}
+#| echo: false
+#| eval: true
+#| fig-width: 6
+#| fig-height: 5
+
+categorias <- data.frame(
+  grupo = c("A", "B", "C", "D"),
+  frequencia = c(25, 40, 30, 20)
+)
+
+ggplot(categorias, aes(x = grupo, y = frequencia)) +
+  geom_bar(stat = "identity", fill = "steelblue") +
+  labs(
+    title = "Frequência por Grupo",
+    x = "Grupo",
+    y = "Frequência"
+  ) +
+  theme_classic()
+```
+:::
+:::::
 
 ## ggplot2: Histograma
 
+::::: columns
+::: {.column width="50%"}
 ```{r}
 #| echo: true
 #| eval: false
@@ -740,9 +1133,40 @@ ggplot(notas, aes(x = nota)) +
   ) +
   theme_minimal()
 ```
+:::
+
+::: {.column width="50%"}
+```{r}
+#| echo: false
+#| eval: true
+#| fig-width: 6
+#| fig-height: 5
+
+notas <- data.frame(
+  nota = rnorm(100, mean = 7, sd = 1.5)
+)
+
+ggplot(notas, aes(x = nota)) +
+  geom_histogram(
+    bins = 20, 
+    fill = "coral", 
+    color = "black",
+    alpha = 0.7
+  ) +
+  labs(
+    title = "Distribuição de Notas",
+    x = "Nota",
+    y = "Frequência"
+  ) +
+  theme_minimal()
+```
+:::
+:::::
 
 ## ggplot2: Personalizando Cores e Grupos
 
+::::: columns
+::: {.column width="50%"}
 ```{r}
 #| echo: true
 #| eval: false
@@ -756,13 +1180,51 @@ dados <- data.frame(
 ggplot(dados, aes(x = x, y = y, color = grupo)) +
   geom_point(size = 3) +
   geom_line() +
-  scale_color_manual(values = c("A" = "red", "B" = "blue")) +
+  scale_color_manual(
+    values = c("A" = "red", "B" = "blue")
+  ) +
   labs(title = "Dados por Grupo") +
   theme_bw()
 ```
+:::
+
+::: {.column width="50%"}
+```{r}
+#| echo: false
+#| eval: true
+#| fig-width: 6
+#| fig-height: 5
+
+dados <- data.frame(
+  x = 1:20,
+  y = rnorm(20),
+  grupo = rep(c("A", "B"), each = 10)
+)
+
+ggplot(dados, aes(x = x, y = y, color = grupo)) +
+  geom_point(size = 3) +
+  geom_line() +
+  scale_color_manual(
+    values = c("A" = "red", "B" = "blue")
+  ) +
+  labs(title = "Dados por Grupo") +
+  theme_bw()
+```
+:::
+:::::
+
+------------------------------------------------------------------------
+
+::: callout-tip
+## Dica
+
+Plotly é especialmente útil em aplicativos Shiny para adicionar interatividade!
+:::
 
 ## Plotly: Gráficos Interativos
 
+::::: columns
+::: {.column width="50%"}
 ```{r}
 #| echo: true
 #| eval: false
@@ -780,14 +1242,31 @@ plot_ly(dados, x = ~altura, y = ~peso,
         type = 'scatter', mode = 'markers') %>%
   layout(title = "Gráfico Interativo")
 ```
-
-::: callout-tip
-## Dica
-
-Plotly é especialmente útil em aplicativos Shiny para adicionar interatividade!
 :::
 
-# 5. Programação Básica {background-color="#2C3E50"}
+::: {.column width="50%"}
+```{r}
+#| echo: false
+#| eval: true
+#| fig-width: 6
+#| fig-height: 5
+
+library(plotly)
+
+dados <- data.frame(
+  altura = c(150, 160, 170, 180, 190),
+  peso = c(50, 60, 70, 80, 90)
+)
+
+# Criar direto com plotly
+plot_ly(dados, x = ~altura, y = ~peso, 
+        type = 'scatter', mode = 'markers') %>%
+  layout(title = "Gráfico Interativo")
+```
+:::
+:::::
+
+# 6. Programação Básica {background-color="#2C3E50"}
 
 ## Estruturas Condicionais: if/else
 
@@ -865,13 +1344,15 @@ for (i in 1:10) {
 print(soma)  # 55
 ```
 
+------------------------------------------------------------------------
+
 ::: callout-note
 ## Nota
 
 No R moderno, preferimos funções da família `apply` ou `purrr::map` ao invés de loops.
 :::
 
-# 6. Funções no R {background-color="#2C3E50"}
+# 7. Funções no R {background-color="#2C3E50"}
 
 ## O que são Funções?
 
@@ -898,6 +1379,8 @@ Como uma receita de bolo: você fornece os ingredientes (inputs) e obtém o bolo
 
 ## Estrutura Básica de uma Função
 
+::::: columns
+::: {.column width="50%"}
 ```{r}
 #| echo: true
 #| eval: false
@@ -913,13 +1396,17 @@ nome_da_funcao <- function(argumento1, argumento2) {
 nome_da_funcao(5, 3)
 # [1] 8
 ```
+:::
 
+::: {.column width="50%"}
 **Componentes:**
 
 1.  **Nome** - identificador da função
 2.  **Argumentos** - valores que a função recebe
 3.  **Corpo** - código entre `{ }`
 4.  **Retorno** - resultado da função
+:::
+:::::
 
 ## Exemplo Simples
 
@@ -1063,6 +1550,8 @@ calcular_imc(70, altura = 1.75)
 Se você vai usar o mesmo código mais de 2 vezes, crie uma função!
 :::
 
+------------------------------------------------------------------------
+
 **Exemplos:**
 
 ```{r}
@@ -1083,40 +1572,6 @@ media1 <- calcular_media(10, 20, 30)
 media2 <- calcular_media(15, 25, 35)
 media3 <- calcular_media(5, 15, 25)
 ```
-
-## Resumo: Aspectos Essenciais
-
-**Estrutura:**
-
-```{r}
-#| echo: true
-#| eval: false
-nome <- function(arg1, arg2 = valor_padrao) {
-  # corpo da função
-  return(resultado)
-}
-```
-
-**Formas de chamar:**
-
-```{r}
-#| echo: true
-#| eval: false
-# Por posição
-funcao(valor1, valor2)
-
-# Por nome
-funcao(arg1 = valor1, arg2 = valor2)
-
-# Misto
-funcao(valor1, arg2 = valor2)
-```
-
-**Lembre-se:**
-
--   Argumentos por posição: ordem importa
--   Argumentos por nome: ordem não importa
--   Valores padrão são opcionais
 
 ## Pacotes: Instalação e Uso
 
@@ -1171,357 +1626,12 @@ help(package = "dplyr")
 # Vinhetas (tutoriais)
 vignette("dplyr")
 browseVignettes("ggplot2")
+
+# Grandes Modelos de Linguagem (LLMs)
+ChatGPT, Claude, Gemini, Microssoft Co-Pilot, Deepseek, ...
 ```
 
-# 7. Shiny - Fundamentos {background-color="#2C3E50"}
-
-## O que é Shiny?
-
-**Shiny** é um framework para criar aplicações web interativas usando R.
-
-**Vantagens:**
-
--   Não precisa saber HTML/CSS/JavaScript
--   Totalmente em R
--   Interatividade automática (reatividade)
--   Deploy fácil
-
-## O que Posso Fazer com Shiny? 
-
-## Visualização Interativa de Dados
-
-::: columns
-::: {.column width="50%"}
-**Dashboards analíticos:**
-
--   Gráficos que atualizam em tempo real
--   Filtros dinâmicos para explorar dados
--   KPIs e métricas principais
--   Comparações entre períodos/grupos
--   Drill-down em dados detalhados
-:::
-
-::: {.column width="50%"}
-**Exemplos:**
-
--   Dashboard de vendas por região
--   Monitoramento de indicadores
--   Análise de dados financeiros
--   Visualização de resultados de pesquisas
--   Painel de métricas de marketing
-:::
-:::
-
-## Ferramentas de Análise Estatística
-
-::: columns
-::: {.column width="50%"}
-**Análises sem código:**
-
--   Upload de dados pelo usuário
--   Testes estatísticos automáticos
--   Análise exploratória interativa
--   Modelagem preditiva
--   Visualização de resultados
--   Download de relatórios
-:::
-
-::: {.column width="50%"}
-**Exemplos:**
-
--   Calculadora de tamanho amostral
--   Ferramenta de testes de hipótese
--   Análise de regressão interativa
--   Comparação de modelos ML
--   Análise de sobrevivência
-:::
-:::
-
-## Calculadoras e Simuladores
-
-::: columns
-::: {.column width="50%"}
-**Cálculos interativos:**
-
--   Inputs do usuário via sliders/campos
--   Cálculos instantâneos
--   Visualização de resultados
--   Comparação de cenários
--   Exportação de resultados
-:::
-
-::: {.column width="50%"}
-**Exemplos:**
-
--   Calculadora de IMC
--   Simulador de investimentos
--   Calculadora de dose de medicamento
--   Estimador de risco
--   Conversor de unidades
--   Calculadora de amostragem
-:::
-:::
-
-## Relatórios Dinâmicos
-
-::: columns
-::: {.column width="50%"}
-**Geração automática:**
-
--   Relatórios parametrizados
--   Atualização com novos dados
--   Múltiplos formatos (PDF, Word, HTML)
--   Gráficos e tabelas customizáveis
--   Download com um clique
-:::
-
-::: {.column width="50%"}
-**Exemplos:**
-
--   Relatório mensal de vendas
--   Boletim epidemiológico
--   Análise de resultados acadêmicos
--   Relatório de experimentos
--   Sumário executivo automatizado
-:::
-:::
-
-## Coleta e Validação de Dados
-
-::: columns
-::: {.column width="50%"}
-**Formulários interativos:**
-
--   Entrada de dados estruturada
--   Validação em tempo real
--   Salvamento em banco de dados
--   Upload de arquivos
--   Confirmação visual
-:::
-
-::: {.column width="50%"}
-**Exemplos:**
-
--   Formulário de cadastro
--   Questionário de pesquisa
--   Sistema de registro de pacientes
--   Coleta de dados experimentais
--   Avaliação de satisfação
-:::
-:::
-
-## Ferramentas Educacionais
-
-::: columns
-::: {.column width="50%"}
-**Aprendizado interativo:**
-
--   Demonstrações de conceitos
--   Simulações estatísticas
--   Visualização de algoritmos
--   Experimentos virtuais
--   Tutoriais guiados
-:::
-
-::: {.column width="50%"}
-**Exemplos:**
-
--   Teorema Central do Limite (animado)
--   Visualização de distribuições
--   Simulador de testes de hipótese
--   Demonstração de regressão
--   Explicação de intervalos de confiança
-:::
-:::
-
-## Integração com Bancos de Dados
-
-::: columns
-::: {.column width="50%"}
-**Acesso a dados em tempo real:**
-
--   Consultas a bancos SQL
--   Atualização automática
--   Múltiplos usuários simultâneos
--   Filtros complexos
--   Agregações dinâmicas
-:::
-
-::: {.column width="50%"}
-**Exemplos:**
-
--   Painel de estoque em tempo real
--   Monitor de transações
--   Sistema de consulta de pacientes
--   Dashboard de logística
--   Análise de logs de sistema
-:::
-:::
-
-## Aplicações de Machine Learning
-
-::: columns
-::: {.column width="50%"}
-**Modelos preditivos:**
-
--   Interface para treinamento de modelos
--   Predições em tempo real
--   Comparação de algoritmos
--   Visualização de performance
--   Interpretação de resultados
-:::
-
-::: {.column width="50%"}
-**Exemplos:**
-
--   Classificador de imagens
--   Preditor de churn de clientes
--   Diagnóstico assistido
--   Recomendador de produtos
--   Detector de anomalias
-:::
-:::
-
-## Mapas e Dados Geoespaciais
-
-::: columns
-::: {.column width="50%"}
-**Visualização geográfica:**
-
--   Mapas interativos
--   Marcadores dinâmicos
--   Filtros por região
--   Heatmaps
--   Análise espacial
-:::
-
-::: {.column width="50%"}
-**Exemplos:**
-
--   Mapa de casos de doenças
--   Distribuição de vendas por região
--   Localizador de estabelecimentos
--   Análise demográfica
--   Monitoramento ambiental
-:::
-:::
-
-## Monitoramento em Tempo Real
-
-::: columns
-::: {.column width="50%"}
-**Acompanhamento contínuo:**
-
--   Atualização automática de dados
--   Alertas e notificações
--   Indicadores críticos em destaque
--   Histórico de mudanças
--   Comparação com metas
-:::
-
-::: {.column width="50%"}
-**Exemplos:**
-
--   Monitor de servidor/sistema
--   Acompanhamento de experimentos
--   Dashboard de produção
--   Rastreamento de KPIs
--   Monitor de redes sociais
-:::
-:::
-
-## Comparação e Benchmarking
-
-::: columns
-::: {.column width="50%"}
-**Análises comparativas:**
-
--   Comparar múltiplos cenários
--   Análise antes/depois
--   Benchmarking entre grupos
--   Simulação de "what-if"
--   Visualização de diferenças
-:::
-
-::: {.column width="50%"}
-**Exemplos:**
-
--   Comparar performance de produtos
--   A/B testing visualização
--   Benchmark de tratamentos médicos
--   Comparação de estratégias
--   Análise de competitividade
-:::
-:::
-
-## Exemplos do Mundo Real
-
-**Áreas de aplicação:**
-
-::: incremental
--   **Saúde:** dashboards hospitalares, calculadoras clínicas, monitoramento de pacientes
--   **Negócios:** análise de vendas, previsão de demanda, CRM interativo
--   **Educação:** notas interativas, análise de desempenho, material didático
--   **Ciência:** análise de experimentos, visualização de dados, publicações interativas
--   **Governo:** transparência de dados públicos, indicadores sociais, mapas de serviços
--   **Finanças:** análise de investimentos, risco de crédito, planejamento financeiro
-:::
-
-## Vantagens do Shiny
-
-::: {.callout-tip}
-## Por que escolher Shiny?
-
-**✅ Sem necessidade de conhecer web development**
-
-**✅ Totalmente em R - use suas habilidades existentes**
-
-**✅ Gratuito e open-source**
-
-**✅ Comunidade ativa e muitos exemplos**
-
-**✅ Deploy facilitado (shinyapps.io, servidor próprio)**
-
-**✅ Integração com todo ecossistema R (pacotes, gráficos, modelos)**
-:::
-
-## Galeria de Inspiração
-
-::: columns
-::: {.column width="50%"}
-**Onde encontrar exemplos:**
-
--   [Shiny Gallery](https://shiny.posit.co/r/gallery/)
--   [RStudio Blog](https://posit.co/blog/)
--   GitHub (busque "shiny app")
--   [Shiny Contest](https://posit.co/blog/shiny-contest-2024/)
-:::
-
-::: {.column width="50%"}
-**Dica:**
-
-Explore apps existentes para:
-
--   Ver o que é possível
--   Aprender técnicas novas
--   Inspirar-se para seus projetos
--   Adaptar código para suas necessidades
-:::
-:::
-
-## Limitações e Considerações
-
-**Shiny pode não ser ideal para:**
-
-::: incremental
--   Sites estáticos (use R Markdown/Quarto)
--   Apps com milhões de usuários simultâneos
--   Aplicações que precisam funcionar offline
--   Interfaces extremamente complexas (considere frameworks web)
-:::
-
-**Mas para a maioria dos casos de análise de dados e visualização interativa, Shiny é perfeito!**
-
+# 8. Shiny - Fundamentos {background-color="#2C3E50"}
 
 ## Estrutura Básica de um App Shiny
 
@@ -1556,9 +1666,13 @@ shinyApp(ui = ui, server = server)
 
 ## Layouts no Shiny
 
+::::: columns
+::: {.column width="50%"}
 ```{r}
 #| echo: true
 #| eval: false
+
+library(shiny)
 
 # Layout com sidebar (mais comum)
 ui <- fluidPage(
@@ -1567,6 +1681,25 @@ ui <- fluidPage(
     mainPanel(width = 9, "Resultados aqui")
   )
 )
+```
+:::
+
+::: {.column width="50%"}
+
+![](images/primeiro_app_sidebar.png)
+
+:::
+:::::
+
+---
+
+::::: columns
+::: {.column width="50%"}
+
+```{r}
+#| echo: true
+#| eval: false
+library(shiny)
 
 # Layout com abas
 ui <- fluidPage(
@@ -1576,8 +1709,28 @@ ui <- fluidPage(
     tabPanel("Aba 3", "Conteúdo 3")
   )
 )
+```
 
+:::
+::: {.column width="50%"}
+![](images/primeiro_app_abas.png)
+:::
+:::::
+
+---
+
+::::: columns
+::: {.column width="50%"}
+
+---
+
+```{r}
 # Layout em colunas
+#| echo: true
+#| eval: false
+
+library(shiny)
+
 ui <- fluidPage(
   fluidRow(
     column(6, "Coluna 1"),
@@ -1585,6 +1738,14 @@ ui <- fluidPage(
   )
 )
 ```
+
+::: {.column width="50%"}
+
+![](images/primeiro_app_colunas.png)
+
+:::
+:::::
+
 
 ## Inputs Principais (1/2)
 
@@ -1703,7 +1864,7 @@ server <- function(input, output) {
 shinyApp(ui, server)
 ```
 
-# 8. Reatividade no Shiny {background-color="#2C3E50"}
+# 9. Reatividade no Shiny {background-color="#2C3E50"}
 
 ## O que é Reatividade?
 
@@ -1926,7 +2087,7 @@ server <- function(input, output) {
 # Dados só mudam ao clicar "Atualizar Gráfico"
 ```
 
-# 9. IA e Prompting para R/Shiny {background-color="#2C3E50"}
+# 10. IA e Prompting para R/Shiny {background-color="#2C3E50"}
 
 ## Como a IA Pode Ajudar
 
@@ -2147,7 +2308,7 @@ Quando uso cada um?"
 :::
 :::::
 
-# 11. Boas Práticas {background-color="#2C3E50"}
+# 11. Boas Práticas e Princípios {background-color="#2C3E50"}
 
 ## Organização de Código no Shiny
 
@@ -2373,6 +2534,32 @@ server <- function(input, output) {
 # (ao conectar com banco de dados)
 ```
 
+## Princípios de Engenharia de Software relevantes para web apps com Shiny
+
+## 1. KISS (Keep It Simple, Stupid) — *Mantenha isso simples*
+
+-   Busque sempre a simplicidade no design e na implementação.
+-   Evite complexidade desnecessária que dificulte o entendimento e a manutenção.
+-   Foque em escrever código limpo, legível e conciso.
+
+## 2. DRY (Don’t Repeat Yourself) — *Não se repita*
+
+-   Elimine redundâncias no código e nos processos.
+-   Promova **reuso** e design modular para aumentar eficiência e reduzir erros.
+-   Centralize funcionalidades comuns e evite duplicação de lógica.
+
+## 3. YAGNI (You Aren’t Gonna Need It) — *Você não vai precisar disso*
+
+-   Implemente somente as funcionalidades que são realmente necessárias agora.
+-   Resista à tentação de adicionar features que talvez nunca sejam usadas.
+-   Foque em entregar valor de forma incremental e iterativa.
+
+## 4. Separação de Responsabilidades (Separation of Concerns)
+
+-   Separe o software em módulos ou componentes distintos e independentes.
+-   Cada módulo deve ter uma responsabilidade clara e mínima sobreposição.
+-   Promove **baixo acoplamento** e **alta coesão**, facilitando manutenção e escalabilidade.
+
 # 12. Recursos e Próximos Passos {background-color="#2C3E50"}
 
 ## Documentação Oficial
@@ -2513,7 +2700,9 @@ IA é uma ferramenta, não um substituto para aprendizado!
 6.  **Publique** (não obrigatório) (shinyapps.io, GitHub)
 :::
 
-# Desenvolva iterativamente com ajuda de IA {.scrollable}
+# 13. Projeto Aplicado {background-color="#2C3E50"}
+
+## Desenvolva iterativamente com ajuda de IA {.scrollable}
 
 1.  CONTEXTO
     -   Quem vai usar o app? (público alvo)
@@ -2534,7 +2723,7 @@ IA é uma ferramenta, não um substituto para aprendizado!
     -   Estilo visual
     -   Validações necessárias
 
-# Conclusão {background-color="#2C3E50"}
+# 14. Conclusão {background-color="#2C3E50"}
 
 ## Recapitulando
 
@@ -2590,7 +2779,6 @@ Universidade Federal de Rondonópolis
 
 -   Slides
 -   Código dos exemplos
--   Datasets de prática
 -   Lista de recursos
 :::
 :::::
@@ -2598,7 +2786,7 @@ Universidade Federal de Rondonópolis
 ##  {background-color="#2C3E50"}
 
 ::: {style="text-align: center; margin-top: 200px;"}
-# Obrigado! {.r-fit-text}
+# 15. Obrigado! {.r-fit-text}
 
 Os arquivos desta apresentação estão disponíveis em: https://github.com/djalmabarbosa/SDS_curso_shiny_IA
 
@@ -2606,3 +2794,5 @@ Bons estudos e bons códigos! 🚀
 
 Perguntas?
 :::
+::::::::::::::::::::::::::::::::::::::::
+::::::::::::::::::::::::::::::::::::::::::
