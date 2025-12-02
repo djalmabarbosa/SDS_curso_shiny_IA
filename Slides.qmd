@@ -6,12 +6,12 @@ date: today
 format:
   revealjs:
     theme: [default,custom.scss]
-    slide-number: false
+    slide-number: true
     chalkboard: true
     preview-links: auto
     logo: images/logoUFR.png
     css: styles.css
-    footer: "Bioestatística com R e IA"
+    footer: "Introdução ao Shiny com R e IA"
     incremental: false
     transition: slide
     background-transition: fade
@@ -31,13 +31,2576 @@ format:
 
 ------------------------------------------------------------------------
 
+# 1. Formas de Usar o R {background-color="#2C3E50"}
 
+## Onde e Como Usar o R?
 
-:::incremental
--   Você pode usar **Integração Progressiva** ou **Execução Única**
--   Usar a IA para análise (bio)estatística é diferente de usar para perguntar coisas gerais. Requer:
-    -   Algum conhecimento prévio
-    -   Estrutura
-    -   Verificação crítica
+::::: columns
+::: {.column width="50%"}
+**Interfaces principais:**
+
+-   R Console (linha de comando)
+-   RStudio (recomendado)
+-   Positron (novo, moderno)
+-   VS Code com extensões
+-   Posit Cloud (online)
 :::
 
+::: {.column width="50%"}
+**Ambientes de execução:**
+
+-   Desktop (Windows, Mac, Linux)
+-   Servidor
+-   Cloud (AWS, Azure, GCP)
+-   Navegador (RStudio Cloud)
+:::
+:::::
+
+## RStudio: Interface Recomendada
+
+::::: columns
+::: {.column width="50%"}
+**Por que RStudio?**
+
+-   Interface intuitiva
+-   Editor de código com destaque de sintaxe
+-   Visualização de dados e gráficos
+-   Gerenciamento de projetos
+-   Integração com Git
+-   Terminal integrado
+-   Autocompletar código
+:::
+
+::: {.column width="50%"}
+**4 Painéis principais:**
+
+1.  **Editor** - Escrever scripts
+2.  **Console** - Executar comandos
+3.  **Environment** - Ver variáveis
+4.  **Plots/Help** - Gráficos e ajuda
+:::
+:::::
+
+## RStudio: Visão Geral
+
+![](images/rstudio_interface.png)
+
+## Executando Código no RStudio
+
+**Formas de executar:**
+
+::: incremental
+-   **Ctrl/Cmd + Enter** - Executar linha atual
+-   **Ctrl/Cmd + Shift + Enter** - Executar script inteiro
+-   **Ctrl/Cmd + Shift + S** - Executar com source()
+-   **Digitar no Console** - Execução direta (não salva)
+-   **R Markdown/Quarto** - Executar chunks
+:::
+
+---
+
+::: callout-tip
+Sempre trabalhe com scripts (.R) para salvar seu trabalho! Evite trabalhar apenas no Console.
+:::
+
+## Projetos no RStudio
+
+```{r}
+#| echo: true
+#| eval: false
+
+# ✅ RECOMENDADO: Usar Projetos (.Rproj)
+# File > New Project > New Directory > New Project
+
+# Vantagens:
+# - Diretório de trabalho automático
+# - Histórico isolado por projeto
+# - Fácil compartilhamento
+# - Integração com Git
+# - Organização clara
+
+# Estrutura sugerida:
+meu_projeto/
+  ├── meu_projeto.Rproj
+  ├── data/           # Dados
+  ├── R/              # Scripts R
+  ├── output/         # Resultados
+  ├── docs/           # Documentação
+  └── README.md       # Descrição do projeto
+```
+
+## Positron: A Nova Geração
+
+::::: columns
+::: {.column width="50%"}
+**Positron (novo IDE da Posit)**
+
+-   Interface moderna e rápida
+-   Suporte nativo a R e Python
+-   Editor de dados avançado
+-   Console aprimorado
+-   Integração com IA
+-   Código aberto
+:::
+
+::: {.column width="50%"}
+**Quando usar:**
+
+-   Se busca interface moderna
+-   Trabalha com R e Python
+-   Quer recursos de última geração
+-   Prefere performance otimizada
+
+**Status:** Beta público
+
+[positron.posit.co](https://positron.posit.co)
+:::
+:::::
+
+## Outras Opções: VS Code
+
+::::: columns
+::: {.column width="50%"}
+**Visual Studio Code + R**
+
+-   Editor leve e moderno
+-   Extensões: R, R LSP
+-   Terminal integrado
+-   Git nativo
+-   Comunidade ativa
+:::
+
+::: {.column width="50%"}
+**Quando usar:**
+
+-   Se já usa VS Code
+-   Trabalha com múltiplas linguagens
+-   Prefere interface minimalista
+-   Projetos de desenvolvimento web
+:::
+:::::
+
+::: callout-note
+Para iniciantes, RStudio ainda é mais recomendado!
+:::
+
+## Outras Opções: Posit Cloud
+
+::::: columns
+::: {.column width="50%"}
+**Posit Cloud (RStudio na nuvem)**
+
+-   Sem instalação necessária
+-   Acesso via navegador
+-   Colaboração facilitada
+-   Recursos limitados (plano free)
+-   Ideal para ensino
+:::
+
+::: {.column width="50%"}
+**Link:**
+
+[posit.cloud](https://posit.cloud)
+
+**Quando usar:**
+
+-   Computador sem R instalado
+-   Demonstrações rápidas
+-   Ensino e workshops
+-   Colaboração temporária
+:::
+:::::
+
+## Scripts vs. Console vs. R Markdown
+
+```{r}
+#| echo: true
+#| eval: false
+
+# CONSOLE (não salva)
+# Use para: testes rápidos, exploração
+> 2 + 2
+[1] 4
+
+# SCRIPTS (.R) - salva código
+# Use para: análises, scripts reutilizáveis
+# Arquivo: analise.R
+library(dplyr)
+dados <- read.csv("dados.csv")
+resultado <- dados %>% filter(x > 10)
+
+# R MARKDOWN (.Rmd) / QUARTO (.qmd)
+# Use para: relatórios, apresentações, documentos
+---
+title: "Minha Análise"
+---
+
+# Introdução
+Texto explicativo aqui.
+# Código R aqui
+plot(1:10)
+
+Mais texto e resultados.
+```
+
+## Atalhos Úteis no RStudio
+
+-   `Ctrl/Cmd + Enter` - Executar linha
+-   `Ctrl/Cmd + Shift + M` - Pipe `%>%`
+-   `Alt + -` - Atribuição `<-`
+-   `Ctrl/Cmd + Shift + C` - Comentar/descomentar
+-   `Tab` - Autocompletar
+-   `Ctrl/Cmd + ↑` - Histórico de comandos
+-   `Ctrl/Cmd + L` - Limpar console
+-   `Ctrl/Cmd + Shift + F10` - Reiniciar R
+
+::: callout-tip
+Ver todos: Tools \> Keyboard Shortcuts Help
+:::
+
+## Configurações Recomendadas
+
+::::: columns
+::: {.column width="50%"}
+**Tools \> Global Options**
+
+-   ❌ Restaurar workspace: **NUNCA**
+-   ❌ Salvar workspace: **NUNCA**
+-   ✅ Sempre começar com ambiente limpo
+-   ✅ Soft-wrap: ativado
+-   ✅ Encoding: UTF-8
+:::
+
+::: {.column width="50%"}
+**Por quê?**
+
+-   Reprodutibilidade
+-   Evita objetos "fantasma"
+-   Força boas práticas
+-   Scripts autossuficientes
+:::
+:::::
+
+```{r}
+#| echo: true
+#| eval: false
+# Sempre inicie scripts assim:
+rm(list = ls())  # Limpar ambiente
+library(pacote1)
+library(pacote2)
+# ... seu código
+```
+
+# 2. Fundamentos Básicos do R {background-color="#2C3E50"}
+
+## Operações e Atribuição
+
+```{r}
+#| echo: true
+#| eval: false
+
+# Atribuição de valores
+x <- 10
+y = 5
+
+# Operações matemáticas
+soma <- x + y
+produto <- x * y
+divisao <- x / y
+
+# Operadores lógicos
+x > y    # TRUE
+x == y   # FALSE
+x != y   # TRUE
+```
+
+## Tipos de Dados
+
+```{r}
+#| echo: true
+#| eval: false
+
+# Numérico
+idade <- 25
+peso <- 70.5
+
+# Character (texto)
+nome <- "Maria"
+cidade <- 'São Paulo'
+
+# Lógico
+aprovado <- TRUE
+ativo <- FALSE
+
+# Verificar tipo
+class(idade)    # "numeric"
+typeof(nome)    # "character"
+```
+
+## Estruturas de Dados: Vetores
+
+```{r}
+#| echo: true
+#| eval: false
+
+# Criar vetores
+idades <- c(25, 30, 35, 40, 45)
+nomes <- c("Ana", "Bruno", "Carlos")
+
+# Acessar elementos
+idades[1]      # 25 (primeiro elemento)
+idades[3]      # 35 (terceiro elemento)
+idades[1:3]    # 25, 30, 35 (intervalo)
+
+# Operações com vetores
+idades + 5     # Soma 5 a todos os elementos
+mean(idades)   # Média
+length(idades) # Número de elementos
+```
+
+## Estruturas de Dados: Data Frames
+
+```{r}
+#| echo: true
+#| eval: false
+
+# Criar data frame
+dados <- data.frame(
+  nome = c("Ana", "Bruno", "Carlos"),
+  idade = c(25, 30, 35),
+  altura = c(1.65, 1.80, 1.75)
+)
+
+# Acessar colunas
+dados$nome           # Vetor com nomes
+dados[, "idade"]     # Coluna idade
+dados[1, ]           # Primeira linha
+dados[1, 2]          # Primeira linha, segunda coluna
+```
+
+## Estruturas de Dados: Listas
+
+```{r}
+#| echo: true
+#| eval: false
+
+# Criar lista (pode conter tipos diferentes)
+minha_lista <- list(
+  numeros = c(1, 2, 3, 4, 5),
+  texto = "Olá",
+  logico = TRUE,
+  dados = data.frame(x = 1:3, y = 4:6)
+)
+
+# Acessar elementos
+minha_lista$numeros     # Acesso pelo nome
+minha_lista[[1]]        # Primeiro elemento
+minha_lista[[4]]$x      # Coluna x do data frame
+```
+
+## Funções Básicas Essenciais
+
+```{r}
+#| echo: true
+#| eval: false
+
+dados <- data.frame(
+  x = c(10, 20, 30, 40, 50),
+  y = c(5, 15, 25, 35, 45)
+)
+
+# Exploração de dados
+head(dados)        # Primeiras 6 linhas
+tail(dados, 3)     # Últimas 3 linhas
+str(dados)         # Estrutura dos dados
+summary(dados)     # Resumo estatístico
+dim(dados)         # Dimensões (linhas, colunas)
+names(dados)       # Nomes das colunas
+```
+
+# 3. Manipulação de Dados {background-color="#2C3E50"}
+
+## Pacote dplyr: Introdução
+
+::::: columns
+::: {.column width="50%"}
+**Por que dplyr?**
+
+-   Sintaxe clara e intuitiva
+-   Verbos que descrevem ações
+-   Mais rápido que R base
+-   Integração com pipe `%>%`
+:::
+
+::: {.column width="50%"}
+**Verbos principais:**
+
+-   `filter()` - filtrar linhas
+-   `select()` - selecionar colunas
+-   `mutate()` - criar/modificar
+-   `arrange()` - ordenar
+-   `summarise()` - resumir
+-   `group_by()` - agrupar
+:::
+:::::
+
+## filter(): Filtrar Linhas
+
+```{r}
+#| echo: true
+#| eval: false
+
+library(dplyr)
+
+# Dados de exemplo
+dados <- data.frame(
+  nome = c("Ana", "Bruno", "Carlos", "Diana"),
+  idade = c(25, 30, 35, 28),
+  cidade = c("SP", "RJ", "SP", "MG")
+)
+
+# Filtrar pessoas de SP
+dados %>% 
+  filter(cidade == "SP")
+
+# Filtrar idade maior que 28
+dados %>% 
+  filter(idade > 28)
+
+# Múltiplas condições
+dados %>% 
+  filter(cidade == "SP" & idade > 25)
+```
+
+## select(): Selecionar Colunas
+
+```{r}
+#| echo: true
+#| eval: false
+
+# Selecionar colunas específicas
+dados %>% 
+  select(nome, idade)
+
+# Remover colunas
+dados %>% 
+  select(-cidade)
+
+# Selecionar intervalo
+dados %>% 
+  select(nome:idade)
+
+# Renomear ao selecionar
+dados %>% 
+  select(nome_completo = nome, idade)
+```
+
+## mutate(): Criar/Modificar Colunas
+
+```{r}
+#| echo: true
+#| eval: false
+
+# Criar nova coluna
+dados %>% 
+  mutate(idade_meses = idade * 12)
+
+# Modificar coluna existente
+dados %>% 
+  mutate(idade = idade + 1)
+
+# Múltiplas transformações
+dados %>% 
+  mutate(
+    idade_meses = idade * 12,
+    maior_idade = idade >= 18,
+    idade_categoria = ifelse(idade < 30, "Jovem", "Adulto")
+  )
+```
+
+## arrange(): Ordenar Dados
+
+```{r}
+#| echo: true
+#| eval: false
+
+# Ordenar por idade (crescente)
+dados %>% 
+  arrange(idade)
+
+# Ordenar decrescente
+dados %>% 
+  arrange(desc(idade))
+
+# Ordenar por múltiplas colunas
+dados %>% 
+  arrange(cidade, desc(idade))
+```
+
+## group_by() + summarise(): Agregações
+
+```{r}
+#| echo: true
+#| eval: false
+
+vendas <- data.frame(
+  produto = c("A", "B", "A", "B", "A"),
+  regiao = c("Sul", "Sul", "Norte", "Norte", "Sul"),
+  valor = c(100, 150, 120, 180, 90)
+)
+
+# Resumo por região
+vendas %>% 
+  group_by(regiao) %>% 
+  summarise(
+    total = sum(valor),
+    media = mean(valor),
+    n = n()
+  )
+
+# Múltiplos agrupamentos
+vendas %>% 
+  group_by(regiao, produto) %>% 
+  summarise(total = sum(valor))
+```
+
+## Pipe Operator: %\>% ou \|\>
+
+```{r}
+#| echo: true
+#| eval: false
+
+# Sem pipe (difícil de ler)
+summarise(
+  group_by(
+    filter(dados, idade > 25),
+    cidade
+  ),
+  media_idade = mean(idade)
+)
+
+# Com pipe (leitura sequencial)
+dados %>% 
+  filter(idade > 25) %>% 
+  group_by(cidade) %>% 
+  summarise(media_idade = mean(idade))
+
+# Pipe nativo do R (R >= 4.1)
+dados |> 
+  filter(idade > 25) |> 
+  summarise(media = mean(idade))
+```
+
+## Leitura de Dados
+
+```{r}
+#| echo: true
+#| eval: false
+
+# CSV - base R
+dados <- read.csv("arquivo.csv")
+
+# CSV - readr (recomendado)
+library(readr)
+dados <- read_csv("arquivo.csv")
+
+# Excel
+library(readxl)
+dados <- read_excel("arquivo.xlsx")
+dados <- read_excel("arquivo.xlsx", sheet = "Planilha2")
+
+# Especificar separador
+dados <- read.csv("arquivo.txt", sep = ";")
+
+# Pular linhas
+dados <- read_csv("arquivo.csv", skip = 2)
+```
+
+# 4. Visualização de Dados {background-color="#2C3E50"}
+
+## ggplot2: Filosofia de Camadas
+
+::::: columns
+::: {.column width="50%"}
+**Componentes básicos:**
+
+1.  **Dados** - o que plotar
+2.  **Estética** - mapeamentos (x, y, cor)
+3.  **Geometrias** - tipo de gráfico
+4.  **Temas** - aparência
+:::
+
+::: {.column width="50%"}
+**Lógica de construção:**
+
+```{r}
+#| echo: true
+#| eval: false
+
+ggplot(dados) +        # 1. Dados
+  aes(x = var1, 
+      y = var2) +      # 2. Estética
+  geom_point() +       # 3. Geometria
+  theme_minimal()      # 4. Tema
+```
+:::
+:::::
+
+## ggplot2: Gráfico de Dispersão
+
+```{r}
+#| echo: true
+#| eval: false
+
+library(ggplot2)
+
+dados <- data.frame(
+  altura = c(150, 160, 170, 180, 190),
+  peso = c(50, 60, 70, 80, 90)
+)
+
+ggplot(dados, aes(x = altura, y = peso)) +
+  geom_point(size = 3, color = "blue") +
+  labs(
+    title = "Relação entre Altura e Peso",
+    x = "Altura (cm)",
+    y = "Peso (kg)"
+  ) +
+  theme_minimal()
+```
+
+## ggplot2: Gráfico de Linhas
+
+```{r}
+#| echo: true
+#| eval: false
+
+vendas <- data.frame(
+  mes = 1:12,
+  valor = c(100, 120, 115, 140, 135, 150, 
+            165, 170, 160, 180, 190, 200)
+)
+
+ggplot(vendas, aes(x = mes, y = valor)) +
+  geom_line(color = "darkgreen", size = 1) +
+  geom_point(color = "darkgreen", size = 3) +
+  labs(
+    title = "Vendas Mensais",
+    x = "Mês",
+    y = "Valor (R$)"
+  ) +
+  theme_light()
+```
+
+## ggplot2: Gráfico de Barras
+
+```{r}
+#| echo: true
+#| eval: false
+
+categorias <- data.frame(
+  grupo = c("A", "B", "C", "D"),
+  frequencia = c(25, 40, 30, 20)
+)
+
+ggplot(categorias, aes(x = grupo, y = frequencia)) +
+  geom_bar(stat = "identity", fill = "steelblue") +
+  labs(
+    title = "Frequência por Grupo",
+    x = "Grupo",
+    y = "Frequência"
+  ) +
+  theme_classic()
+
+# Para dados brutos (contar automaticamente)
+# geom_bar() sem stat = "identity"
+```
+
+## ggplot2: Histograma
+
+```{r}
+#| echo: true
+#| eval: false
+
+notas <- data.frame(
+  nota = rnorm(100, mean = 7, sd = 1.5)
+)
+
+ggplot(notas, aes(x = nota)) +
+  geom_histogram(
+    bins = 20, 
+    fill = "coral", 
+    color = "black",
+    alpha = 0.7
+  ) +
+  labs(
+    title = "Distribuição de Notas",
+    x = "Nota",
+    y = "Frequência"
+  ) +
+  theme_minimal()
+```
+
+## ggplot2: Personalizando Cores e Grupos
+
+```{r}
+#| echo: true
+#| eval: false
+
+dados <- data.frame(
+  x = 1:20,
+  y = rnorm(20),
+  grupo = rep(c("A", "B"), each = 10)
+)
+
+ggplot(dados, aes(x = x, y = y, color = grupo)) +
+  geom_point(size = 3) +
+  geom_line() +
+  scale_color_manual(values = c("A" = "red", "B" = "blue")) +
+  labs(title = "Dados por Grupo") +
+  theme_bw()
+```
+
+## Plotly: Gráficos Interativos
+
+```{r}
+#| echo: true
+#| eval: false
+
+library(plotly)
+
+# Converter ggplot em plotly (interativo)
+grafico_gg <- ggplot(dados, aes(x = altura, y = peso)) +
+  geom_point()
+
+ggplotly(grafico_gg)
+
+# Ou criar direto com plotly
+plot_ly(dados, x = ~altura, y = ~peso, 
+        type = 'scatter', mode = 'markers') %>%
+  layout(title = "Gráfico Interativo")
+```
+
+::: callout-tip
+## Dica
+
+Plotly é especialmente útil em aplicativos Shiny para adicionar interatividade!
+:::
+
+# 5. Programação Básica {background-color="#2C3E50"}
+
+## Estruturas Condicionais: if/else
+
+```{r}
+#| echo: true
+#| eval: false
+
+idade <- 20
+
+# if simples
+if (idade >= 18) {
+  print("Maior de idade")
+}
+
+# if/else
+if (idade >= 18) {
+  print("Maior de idade")
+} else {
+  print("Menor de idade")
+}
+
+# if aninhado
+if (idade < 12) {
+  print("Criança")
+} else if (idade < 18) {
+  print("Adolescente")
+} else {
+  print("Adulto")
+}
+```
+
+## ifelse(): Condição Vetorizada
+
+```{r}
+#| echo: true
+#| eval: false
+
+idades <- c(10, 15, 20, 25, 30)
+
+# ifelse aplica a condição a cada elemento
+categorias <- ifelse(idades >= 18, "Adulto", "Menor")
+print(categorias)
+# [1] "Menor"  "Menor"  "Adulto" "Adulto" "Adulto"
+
+# Útil em mutate
+dados %>% 
+  mutate(
+    status = ifelse(idade >= 18, "Maior", "Menor"),
+    categoria = ifelse(nota >= 7, "Aprovado", "Reprovado")
+  )
+```
+
+## Loops: for
+
+```{r}
+#| echo: true
+#| eval: false
+
+# Loop simples
+for (i in 1:5) {
+  print(i)
+}
+
+# Loop sobre vetor
+frutas <- c("maçã", "banana", "laranja")
+for (fruta in frutas) {
+  print(paste("Eu gosto de", fruta))
+}
+
+# Loop com acumulador
+soma <- 0
+for (i in 1:10) {
+  soma <- soma + i
+}
+print(soma)  # 55
+```
+
+::: callout-note
+## Nota
+
+No R moderno, preferimos funções da família `apply` ou `purrr::map` ao invés de loops.
+:::
+
+# 6. Funções no R {background-color="#2C3E50"}
+
+## O que são Funções?
+
+::::: columns
+::: {.column width="50%"}
+**Definição:**
+
+Funções são blocos de código reutilizáveis que executam uma tarefa específica.
+
+**Analogia:**
+
+Como uma receita de bolo: você fornece os ingredientes (inputs) e obtém o bolo pronto (output).
+:::
+
+::: {.column width="50%"}
+**Por que usar funções?**
+
+-   Evitar repetição de código
+-   Organizar melhor seu código
+-   Facilitar manutenção
+-   Reutilizar em diferentes situações
+:::
+:::::
+
+## Estrutura Básica de uma Função
+
+```{r}
+#| echo: true
+#| eval: false
+
+# Criar uma função
+nome_da_funcao <- function(argumento1, argumento2) {
+  # Código que a função executa
+  resultado <- argumento1 + argumento2
+  return(resultado)
+}
+
+# Usar a função
+nome_da_funcao(5, 3)
+# [1] 8
+```
+
+**Componentes:**
+
+1.  **Nome** - identificador da função
+2.  **Argumentos** - valores que a função recebe
+3.  **Corpo** - código entre `{ }`
+4.  **Retorno** - resultado da função
+
+## Exemplo Simples
+
+```{r}
+#| echo: true
+#| eval: false
+
+# Função de saudação
+saudar <- function(nome) {
+  mensagem <- paste("Olá,", nome, "!")
+  return(mensagem)
+}
+
+# Usar a função
+saudar("Maria")
+# [1] "Olá, Maria !"
+
+saudar("João")
+# [1] "Olá, João !"
+
+# Sem return() - retorna última linha automaticamente
+saudar2 <- function(nome) {
+  paste("Olá,", nome, "!")
+}
+```
+
+## Funções com Múltiplos Argumentos
+
+```{r}
+#| echo: true
+#| eval: false
+
+# Calcular área de retângulo
+calcular_area <- function(base, altura) {
+  area <- base * altura
+  return(area)
+}
+
+# Usar a função
+calcular_area(5, 3)
+# [1] 15
+
+calcular_area(10, 2)
+# [1] 20
+```
+
+## Formas de Passar Argumentos
+
+```{r}
+#| echo: true
+#| eval: false
+
+# Função exemplo
+dividir <- function(numerador, denominador) {
+  numerador / denominador
+}
+
+# 1. POR POSIÇÃO (ordem importa!)
+dividir(10, 2)
+# [1] 5
+
+dividir(2, 10)
+# [1] 0.2
+
+# 2. POR NOME (ordem não importa!)
+dividir(numerador = 10, denominador = 2)
+# [1] 5
+
+dividir(denominador = 2, numerador = 10)
+# [1] 5
+
+# 3. MISTO (posição primeiro, depois nomes)
+dividir(10, denominador = 2)
+# [1] 5
+```
+
+## Argumentos com Valores Padrão
+
+```{r}
+#| echo: true
+#| eval: false
+
+# Definir valores padrão (default)
+saudar <- function(nome, tratamento = "Sr(a)") {
+  paste("Olá,", tratamento, nome, "!")
+}
+
+# Usar valor padrão
+saudar("Silva")
+# [1] "Olá, Sr(a) Silva !"
+
+# Modificar valor padrão
+saudar("Silva", "Dr(a)")
+# [1] "Olá, Dr(a) Silva !"
+
+saudar("Silva", tratamento = "Prof(a)")
+# [1] "Olá, Prof(a) Silva !"
+
+# Outro exemplo
+potencia <- function(numero, expoente = 2) {
+  numero ^ expoente
+}
+
+potencia(5)        # Usa padrão: 5^2
+# [1] 25
+
+potencia(5, 3)     # Sobrescreve: 5^3
+# [1] 125
+```
+
+## Exemplo Prático: IMC
+
+```{r}
+#| echo: true
+#| eval: false
+
+# Criar função
+calcular_imc <- function(peso, altura) {
+  imc <- peso / (altura^2)
+  return(round(imc, 2))
+}
+
+# Usar por posição
+calcular_imc(70, 1.75)
+# [1] 22.86
+
+# Usar por nome
+calcular_imc(peso = 85, altura = 1.80)
+# [1] 26.23
+
+# Misto
+calcular_imc(70, altura = 1.75)
+# [1] 22.86
+```
+
+## Quando Criar uma Função?
+
+::: callout-tip
+## Regra prática
+
+Se você vai usar o mesmo código mais de 2 vezes, crie uma função!
+:::
+
+**Exemplos:**
+
+```{r}
+#| echo: true
+#| eval: false
+
+# ❌ SEM FUNÇÃO - código repetido
+media1 <- (10 + 20 + 30) / 3
+media2 <- (15 + 25 + 35) / 3
+media3 <- (5 + 15 + 25) / 3
+
+# ✅ COM FUNÇÃO - código reutilizável
+calcular_media <- function(a, b, c) {
+  (a + b + c) / 3
+}
+
+media1 <- calcular_media(10, 20, 30)
+media2 <- calcular_media(15, 25, 35)
+media3 <- calcular_media(5, 15, 25)
+```
+
+## Resumo: Aspectos Essenciais
+
+**Estrutura:**
+
+```{r}
+#| echo: true
+#| eval: false
+nome <- function(arg1, arg2 = valor_padrao) {
+  # corpo da função
+  return(resultado)
+}
+```
+
+**Formas de chamar:**
+
+```{r}
+#| echo: true
+#| eval: false
+# Por posição
+funcao(valor1, valor2)
+
+# Por nome
+funcao(arg1 = valor1, arg2 = valor2)
+
+# Misto
+funcao(valor1, arg2 = valor2)
+```
+
+**Lembre-se:**
+
+-   Argumentos por posição: ordem importa
+-   Argumentos por nome: ordem não importa
+-   Valores padrão são opcionais
+
+## Pacotes: Instalação e Uso
+
+```{r}
+#| echo: true
+#| eval: false
+
+# Instalar pacote (fazer uma vez)
+install.packages("dplyr")
+install.packages("ggplot2")
+
+# Instalar múltiplos pacotes
+install.packages(c("dplyr", "ggplot2", "shiny"))
+
+# Carregar pacote (a cada sessão)
+library(dplyr)
+library(ggplot2)
+
+# Usar função sem carregar pacote
+dplyr::filter(dados, idade > 25)
+
+# Verificar se pacote está instalado
+if (!require(dplyr)) {
+  install.packages("dplyr")
+  library(dplyr)
+}
+```
+
+## Obtendo Ajuda no R
+
+```{r}
+#| echo: true
+#| eval: false
+
+# Ajuda sobre uma função
+?mean
+help(mean)
+
+# Buscar por termo
+??regression
+help.search("regression")
+
+# Exemplos de uso
+example(mean)
+
+# Ver código da função
+mean
+
+# Ajuda sobre pacote
+help(package = "dplyr")
+
+# Vinhetas (tutoriais)
+vignette("dplyr")
+browseVignettes("ggplot2")
+```
+
+# 7. Shiny - Fundamentos {background-color="#2C3E50"}
+
+## O que é Shiny?
+
+**Shiny** é um framework para criar aplicações web interativas usando R.
+
+**Vantagens:**
+
+-   Não precisa saber HTML/CSS/JavaScript
+-   Totalmente em R
+-   Interatividade automática (reatividade)
+-   Deploy fácil
+
+## O que Posso Fazer com Shiny? 
+
+## Visualização Interativa de Dados
+
+::: columns
+::: {.column width="50%"}
+**Dashboards analíticos:**
+
+-   Gráficos que atualizam em tempo real
+-   Filtros dinâmicos para explorar dados
+-   KPIs e métricas principais
+-   Comparações entre períodos/grupos
+-   Drill-down em dados detalhados
+:::
+
+::: {.column width="50%"}
+**Exemplos:**
+
+-   Dashboard de vendas por região
+-   Monitoramento de indicadores
+-   Análise de dados financeiros
+-   Visualização de resultados de pesquisas
+-   Painel de métricas de marketing
+:::
+:::
+
+## Ferramentas de Análise Estatística
+
+::: columns
+::: {.column width="50%"}
+**Análises sem código:**
+
+-   Upload de dados pelo usuário
+-   Testes estatísticos automáticos
+-   Análise exploratória interativa
+-   Modelagem preditiva
+-   Visualização de resultados
+-   Download de relatórios
+:::
+
+::: {.column width="50%"}
+**Exemplos:**
+
+-   Calculadora de tamanho amostral
+-   Ferramenta de testes de hipótese
+-   Análise de regressão interativa
+-   Comparação de modelos ML
+-   Análise de sobrevivência
+:::
+:::
+
+## Calculadoras e Simuladores
+
+::: columns
+::: {.column width="50%"}
+**Cálculos interativos:**
+
+-   Inputs do usuário via sliders/campos
+-   Cálculos instantâneos
+-   Visualização de resultados
+-   Comparação de cenários
+-   Exportação de resultados
+:::
+
+::: {.column width="50%"}
+**Exemplos:**
+
+-   Calculadora de IMC
+-   Simulador de investimentos
+-   Calculadora de dose de medicamento
+-   Estimador de risco
+-   Conversor de unidades
+-   Calculadora de amostragem
+:::
+:::
+
+## Relatórios Dinâmicos
+
+::: columns
+::: {.column width="50%"}
+**Geração automática:**
+
+-   Relatórios parametrizados
+-   Atualização com novos dados
+-   Múltiplos formatos (PDF, Word, HTML)
+-   Gráficos e tabelas customizáveis
+-   Download com um clique
+:::
+
+::: {.column width="50%"}
+**Exemplos:**
+
+-   Relatório mensal de vendas
+-   Boletim epidemiológico
+-   Análise de resultados acadêmicos
+-   Relatório de experimentos
+-   Sumário executivo automatizado
+:::
+:::
+
+## Coleta e Validação de Dados
+
+::: columns
+::: {.column width="50%"}
+**Formulários interativos:**
+
+-   Entrada de dados estruturada
+-   Validação em tempo real
+-   Salvamento em banco de dados
+-   Upload de arquivos
+-   Confirmação visual
+:::
+
+::: {.column width="50%"}
+**Exemplos:**
+
+-   Formulário de cadastro
+-   Questionário de pesquisa
+-   Sistema de registro de pacientes
+-   Coleta de dados experimentais
+-   Avaliação de satisfação
+:::
+:::
+
+## Ferramentas Educacionais
+
+::: columns
+::: {.column width="50%"}
+**Aprendizado interativo:**
+
+-   Demonstrações de conceitos
+-   Simulações estatísticas
+-   Visualização de algoritmos
+-   Experimentos virtuais
+-   Tutoriais guiados
+:::
+
+::: {.column width="50%"}
+**Exemplos:**
+
+-   Teorema Central do Limite (animado)
+-   Visualização de distribuições
+-   Simulador de testes de hipótese
+-   Demonstração de regressão
+-   Explicação de intervalos de confiança
+:::
+:::
+
+## Integração com Bancos de Dados
+
+::: columns
+::: {.column width="50%"}
+**Acesso a dados em tempo real:**
+
+-   Consultas a bancos SQL
+-   Atualização automática
+-   Múltiplos usuários simultâneos
+-   Filtros complexos
+-   Agregações dinâmicas
+:::
+
+::: {.column width="50%"}
+**Exemplos:**
+
+-   Painel de estoque em tempo real
+-   Monitor de transações
+-   Sistema de consulta de pacientes
+-   Dashboard de logística
+-   Análise de logs de sistema
+:::
+:::
+
+## Aplicações de Machine Learning
+
+::: columns
+::: {.column width="50%"}
+**Modelos preditivos:**
+
+-   Interface para treinamento de modelos
+-   Predições em tempo real
+-   Comparação de algoritmos
+-   Visualização de performance
+-   Interpretação de resultados
+:::
+
+::: {.column width="50%"}
+**Exemplos:**
+
+-   Classificador de imagens
+-   Preditor de churn de clientes
+-   Diagnóstico assistido
+-   Recomendador de produtos
+-   Detector de anomalias
+:::
+:::
+
+## Mapas e Dados Geoespaciais
+
+::: columns
+::: {.column width="50%"}
+**Visualização geográfica:**
+
+-   Mapas interativos
+-   Marcadores dinâmicos
+-   Filtros por região
+-   Heatmaps
+-   Análise espacial
+:::
+
+::: {.column width="50%"}
+**Exemplos:**
+
+-   Mapa de casos de doenças
+-   Distribuição de vendas por região
+-   Localizador de estabelecimentos
+-   Análise demográfica
+-   Monitoramento ambiental
+:::
+:::
+
+## Monitoramento em Tempo Real
+
+::: columns
+::: {.column width="50%"}
+**Acompanhamento contínuo:**
+
+-   Atualização automática de dados
+-   Alertas e notificações
+-   Indicadores críticos em destaque
+-   Histórico de mudanças
+-   Comparação com metas
+:::
+
+::: {.column width="50%"}
+**Exemplos:**
+
+-   Monitor de servidor/sistema
+-   Acompanhamento de experimentos
+-   Dashboard de produção
+-   Rastreamento de KPIs
+-   Monitor de redes sociais
+:::
+:::
+
+## Comparação e Benchmarking
+
+::: columns
+::: {.column width="50%"}
+**Análises comparativas:**
+
+-   Comparar múltiplos cenários
+-   Análise antes/depois
+-   Benchmarking entre grupos
+-   Simulação de "what-if"
+-   Visualização de diferenças
+:::
+
+::: {.column width="50%"}
+**Exemplos:**
+
+-   Comparar performance de produtos
+-   A/B testing visualização
+-   Benchmark de tratamentos médicos
+-   Comparação de estratégias
+-   Análise de competitividade
+:::
+:::
+
+## Exemplos do Mundo Real
+
+**Áreas de aplicação:**
+
+::: incremental
+-   **Saúde:** dashboards hospitalares, calculadoras clínicas, monitoramento de pacientes
+-   **Negócios:** análise de vendas, previsão de demanda, CRM interativo
+-   **Educação:** notas interativas, análise de desempenho, material didático
+-   **Ciência:** análise de experimentos, visualização de dados, publicações interativas
+-   **Governo:** transparência de dados públicos, indicadores sociais, mapas de serviços
+-   **Finanças:** análise de investimentos, risco de crédito, planejamento financeiro
+:::
+
+## Vantagens do Shiny
+
+::: {.callout-tip}
+## Por que escolher Shiny?
+
+**✅ Sem necessidade de conhecer web development**
+
+**✅ Totalmente em R - use suas habilidades existentes**
+
+**✅ Gratuito e open-source**
+
+**✅ Comunidade ativa e muitos exemplos**
+
+**✅ Deploy facilitado (shinyapps.io, servidor próprio)**
+
+**✅ Integração com todo ecossistema R (pacotes, gráficos, modelos)**
+:::
+
+## Galeria de Inspiração
+
+::: columns
+::: {.column width="50%"}
+**Onde encontrar exemplos:**
+
+-   [Shiny Gallery](https://shiny.posit.co/r/gallery/)
+-   [RStudio Blog](https://posit.co/blog/)
+-   GitHub (busque "shiny app")
+-   [Shiny Contest](https://posit.co/blog/shiny-contest-2024/)
+:::
+
+::: {.column width="50%"}
+**Dica:**
+
+Explore apps existentes para:
+
+-   Ver o que é possível
+-   Aprender técnicas novas
+-   Inspirar-se para seus projetos
+-   Adaptar código para suas necessidades
+:::
+:::
+
+## Limitações e Considerações
+
+**Shiny pode não ser ideal para:**
+
+::: incremental
+-   Sites estáticos (use R Markdown/Quarto)
+-   Apps com milhões de usuários simultâneos
+-   Aplicações que precisam funcionar offline
+-   Interfaces extremamente complexas (considere frameworks web)
+:::
+
+**Mas para a maioria dos casos de análise de dados e visualização interativa, Shiny é perfeito!**
+
+
+## Estrutura Básica de um App Shiny
+
+```{r}
+#| echo: true
+#| eval: false
+
+library(shiny)
+
+# Interface do Usuário (UI)
+ui <- fluidPage(
+  titlePanel("Meu Primeiro App"),
+  
+  sidebarLayout(
+    sidebarPanel(
+      # Inputs aqui
+    ),
+    mainPanel(
+      # Outputs aqui
+    )
+  )
+)
+
+# Servidor (lógica)
+server <- function(input, output) {
+  # Código reativo aqui
+}
+
+# Executar o app
+shinyApp(ui = ui, server = server)
+```
+
+## Layouts no Shiny
+
+```{r}
+#| echo: true
+#| eval: false
+
+# Layout com sidebar (mais comum)
+ui <- fluidPage(
+  sidebarLayout(
+    sidebarPanel(width = 3, "Controles aqui"),
+    mainPanel(width = 9, "Resultados aqui")
+  )
+)
+
+# Layout com abas
+ui <- fluidPage(
+  tabsetPanel(
+    tabPanel("Aba 1", "Conteúdo 1"),
+    tabPanel("Aba 2", "Conteúdo 2"),
+    tabPanel("Aba 3", "Conteúdo 3")
+  )
+)
+
+# Layout em colunas
+ui <- fluidPage(
+  fluidRow(
+    column(6, "Coluna 1"),
+    column(6, "Coluna 2")
+  )
+)
+```
+
+## Inputs Principais (1/2)
+
+```{r}
+#| echo: true
+#| eval: false
+
+ui <- fluidPage(
+  # Texto
+  textInput("nome", "Digite seu nome:", value = ""),
+  
+  # Número
+  numericInput("idade", "Idade:", value = 25, min = 0, max = 120),
+  
+  # Slider
+  sliderInput("altura", "Altura (cm):", 
+              min = 140, max = 220, value = 170),
+  
+  # Slider com intervalo
+  sliderInput("faixa", "Faixa de idade:",
+              min = 0, max = 100, value = c(20, 40))
+)
+```
+
+## Inputs Principais (2/2)
+
+```{r}
+#| echo: true
+#| eval: false
+
+ui <- fluidPage(
+  # Menu dropdown
+  selectInput("cidade", "Escolha a cidade:",
+              choices = c("São Paulo", "Rio de Janeiro", "Brasília")),
+  
+  # Checkbox
+  checkboxInput("aceito", "Aceito os termos", value = FALSE),
+  
+  # Radio buttons
+  radioButtons("sexo", "Sexo:",
+               choices = c("Masculino", "Feminino", "Outro")),
+  
+  # Botão de ação
+  actionButton("calcular", "Calcular", class = "btn-primary"),
+  
+  # Upload de arquivo
+  fileInput("arquivo", "Escolha um arquivo CSV:")
+)
+```
+
+## Outputs Principais
+
+```{r}
+#| echo: true
+#| eval: false
+
+ui <- fluidPage(
+  # Texto
+  textOutput("texto_simples"),
+  verbatimTextOutput("texto_codigo"),
+  
+  # Tabela
+  tableOutput("tabela_estatica"),
+  dataTableOutput("tabela_interativa"),
+  
+  # Gráfico
+  plotOutput("grafico_estatico"),
+  plotlyOutput("grafico_interativo"),
+  
+  # Interface customizada
+  uiOutput("interface_dinamica")
+)
+```
+
+## Exemplo Completo: App Simples
+
+```{r}
+#| echo: true
+#| eval: false
+
+library(shiny)
+
+ui <- fluidPage(
+  titlePanel("Calculadora de IMC"),
+  
+  sidebarLayout(
+    sidebarPanel(
+      numericInput("peso", "Peso (kg):", value = 70, min = 1),
+      numericInput("altura", "Altura (m):", value = 1.75, 
+                   min = 0.5, max = 2.5, step = 0.01)
+    ),
+    
+    mainPanel(
+      h3("Resultado:"),
+      textOutput("imc"),
+      textOutput("classificacao")
+    )
+  )
+)
+
+server <- function(input, output) {
+  output$imc <- renderText({
+    imc <- input$peso / (input$altura^2)
+    paste("Seu IMC é:", round(imc, 2))
+  })
+  
+  output$classificacao <- renderText({
+    imc <- input$peso / (input$altura^2)
+    if (imc < 18.5) "Abaixo do peso"
+    else if (imc < 25) "Peso normal"
+    else if (imc < 30) "Sobrepeso"
+    else "Obesidade"
+  })
+}
+
+shinyApp(ui, server)
+```
+
+# 8. Reatividade no Shiny {background-color="#2C3E50"}
+
+## O que é Reatividade?
+
+::::: columns
+::: {.column width="50%"}
+**Reatividade** é o sistema que atualiza automaticamente os outputs quando os inputs mudam.
+
+**Sem você precisar:**
+
+-   Detectar mudanças manualmente
+-   Chamar funções de atualização
+-   Gerenciar dependências
+:::
+
+::: {.column width="50%"}
+**Tipos de objetos reativos:**
+
+1.  **Reactive sources** (inputs)
+2.  **Reactive conductors** (intermediários)
+3.  **Reactive endpoints** (outputs)
+:::
+:::::
+
+## Acessando Inputs
+
+```{r}
+#| echo: true
+#| eval: false
+
+server <- function(input, output) {
+  
+  # Acessar valor de input
+  output$texto <- renderText({
+    # input$id_do_input
+    paste("Você digitou:", input$nome)
+  })
+  
+  # ERRO: não acesse inputs fora de contexto reativo
+  # x <- input$nome  # NÃO FUNCIONA!
+  
+  # CORRETO: dentro de render* ou reactive()
+  output$resultado <- renderText({
+    x <- input$nome  # OK aqui
+    paste("Olá,", x)
+  })
+}
+```
+
+## render\*(): Criando Outputs
+
+```{r}
+#| echo: true
+#| eval: false
+
+server <- function(input, output) {
+  
+  # Texto
+  output$texto <- renderText({
+    paste("Resultado:", input$valor * 2)
+  })
+  
+  # Gráfico
+  output$grafico <- renderPlot({
+    hist(rnorm(input$n))
+  })
+  
+  # Tabela
+  output$tabela <- renderTable({
+    data.frame(x = 1:input$n, y = rnorm(input$n))
+  })
+  
+  # Print (console output)
+  output$resumo <- renderPrint({
+    summary(rnorm(input$n))
+  })
+}
+```
+
+## reactive(): Valores Intermediários
+
+```{r}
+#| echo: true
+#| eval: false
+
+server <- function(input, output) {
+  
+  # Criar valor reativo (executado quando inputs mudam)
+  dados_filtrados <- reactive({
+    mtcars %>% 
+      filter(cyl == input$cilindros) %>% 
+      filter(mpg > input$mpg_minimo)
+  })
+  
+  # Usar em múltiplos outputs (chame com parênteses!)
+  output$grafico <- renderPlot({
+    ggplot(dados_filtrados(), aes(x = wt, y = mpg)) +
+      geom_point()
+  })
+  
+  output$tabela <- renderTable({
+    dados_filtrados()
+  })
+  
+  output$resumo <- renderPrint({
+    summary(dados_filtrados())
+  })
+}
+```
+
+## isolate(): Quebrar Reatividade
+
+```{r}
+#| echo: true
+#| eval: false
+
+server <- function(input, output) {
+  
+  output$resultado <- renderText({
+    # Este output DEPENDE de input$x (reativo)
+    x <- input$x
+    
+    # Este output NÃO DEPENDE de input$y (isolado)
+    y <- isolate(input$y)
+    
+    paste("x =", x, ", y =", y)
+  })
+  # O output só atualiza quando input$x muda
+  # Mudanças em input$y são ignoradas
+}
+```
+
+::: callout-tip
+## Quando usar isolate()
+
+Use quando quiser ler um valor reativo sem criar uma dependência.
+:::
+
+## observeEvent(): Reagir a Eventos
+
+```{r}
+#| echo: true
+#| eval: false
+
+server <- function(input, output) {
+  
+  # Executar código quando botão é clicado
+  observeEvent(input$calcular, {
+    # Código aqui executa APENAS quando botão é clicado
+    showNotification("Cálculo realizado!")
+  })
+  
+  # Executar quando input específico muda
+  observeEvent(input$dataset, {
+    # Carregar novos dados quando usuário seleciona dataset
+    dados <- read.csv(paste0(input$dataset, ".csv"))
+  })
+  
+  # Múltiplos gatilhos
+  observeEvent(c(input$x, input$y), {
+    print("X ou Y mudou!")
+  })
+}
+```
+
+## eventReactive(): Valor Reativo com Gatilho
+
+```{r}
+#| echo: true
+#| eval: false
+
+ui <- fluidPage(
+  numericInput("n", "Tamanho da amostra:", 100),
+  actionButton("gerar", "Gerar Dados"),
+  plotOutput("grafico")
+)
+
+server <- function(input, output) {
+  
+  # Dados só atualizam quando botão é clicado
+  dados <- eventReactive(input$gerar, {
+    rnorm(input$n)
+  })
+  
+  output$grafico <- renderPlot({
+    # Usa dados() que só muda quando botão é clicado
+    hist(dados())
+  })
+  
+  # Mesmo que input$n mude, os dados não atualizam
+  # até que o botão seja clicado novamente
+}
+```
+
+## Exemplo: Controle de Reatividade
+
+```{r}
+#| echo: true
+#| eval: false
+
+ui <- fluidPage(
+  sliderInput("n", "N:", 10, 1000, 100),
+  actionButton("atualizar", "Atualizar Gráfico"),
+  plotOutput("grafico")
+)
+
+server <- function(input, output) {
+  
+  # Dados só atualizam ao clicar no botão
+  dados_gerados <- eventReactive(input$atualizar, {
+    rnorm(input$n)  # Usa valor ATUAL de input$n
+  })
+  
+  output$grafico <- renderPlot({
+    hist(dados_gerados(), breaks = 30,
+         main = paste("N =", length(dados_gerados())))
+  })
+}
+
+# Usuário pode ajustar N sem regerar os dados
+# Dados só mudam ao clicar "Atualizar Gráfico"
+```
+
+# 9. IA e Prompting para R/Shiny {background-color="#2C3E50"}
+
+## Como a IA Pode Ajudar
+
+::::: columns
+::: {.column width="50%"}
+**A IA pode:**
+
+-   Gerar código R/Shiny
+-   Explicar código existente
+-   Debugar erros
+-   Sugerir melhorias
+-   Criar exemplos
+-   Responder dúvidas técnicas
+:::
+
+::: {.column width="50%"}
+**A IA NÃO substitui:**
+
+-   Conhecimento dos conceitos
+-   Pensamento crítico
+-   Validação de resultados
+-   Compreensão do problema
+-   Decisões de design
+:::
+:::::
+
+## Anatomia de um Bom Prompt
+
+::: callout-note
+## Estrutura recomendada
+
+1.  **Contexto** - O que você está fazendo
+2.  **Objetivo** - O que você quer alcançar
+3.  **Especificações** - Detalhes técnicos
+4.  **Formato** - Como quer a resposta
+5.  **Restrições** - O que evitar (opcional)
+:::
+
+## Exemplos de Prompts Ruins vs. Bons
+
+::::: columns
+::: {.column width="50%"}
+**❌ RUIM:**
+
+"Crie um app Shiny"
+
+"Como filtrar dados?"
+
+"Conserte este código"
+
+**Por quê?**
+
+-   Muito vago
+-   Sem contexto
+-   Sem especificações
+:::
+
+::: {.column width="50%"}
+**✅ BOM:**
+
+"Crie um app Shiny que permita upload de CSV, filtre por uma coluna selecionável, e mostre gráfico de dispersão"
+
+"Como usar dplyr::filter() para selecionar apenas linhas onde idade \> 25 E cidade == 'SP'?"
+
+"Este código dá erro 'object not found'. \[código\]. Estou tentando criar um gráfico com ggplot2 usando dados filtrados."
+:::
+:::::
+
+## Prompts Eficazes: Criação de Apps
+
+```{r}
+#| echo: true
+#| eval: false
+
+# PROMPT EXEMPLO:
+"Crie um app Shiny com as seguintes características:
+- Upload de arquivo CSV
+- Sidebar com:
+  * Seleção de variável para eixo X (selectInput)
+  * Seleção de variável para eixo Y (selectInput)
+  * Slider para ajustar transparência dos pontos (0 a 1)
+- Painel principal com:
+  * Gráfico de dispersão usando ggplot2
+  * Tabela mostrando os dados filtrados
+- Use theme_minimal() no gráfico
+- Adicione validação para garantir que arquivo foi carregado"
+```
+
+## Prompts Eficazes: Debugging
+
+```{r}
+#| echo: true
+#| eval: false
+
+# PROMPT EXEMPLO:
+"Estou tentando criar um app Shiny que filtra dados 
+baseado em um slider, mas recebo o seguinte erro:
+'Error: object 'dados_filtrados' not found'
+
+Meu código é:
+[colar código aqui]
+
+O que estou fazendo errado? Preciso usar reactive()?
+Como corrijo isto?"
+
+# OU MAIS ESPECÍFICO:
+"No meu app Shiny, o gráfico não atualiza quando mudo 
+o slider. O erro no console é: [colar erro].
+Acredito que o problema está na função reactive(), 
+mas não tenho certeza. Aqui está o código do server: 
+[colar código]"
+```
+
+## Prompts Eficazes: Modificação de Código
+
+```{r}
+#| echo: true
+#| eval: false
+
+# PROMPT EXEMPLO:
+"Tenho este app Shiny funcionando:
+[colar código]
+
+Gostaria de adicionar as seguintes funcionalidades:
+1. Um botão 'Baixar Dados' que salva a tabela filtrada como CSV
+2. Um segundo gráfico mostrando um histograma da variável Y
+3. Reorganizar o layout para ter os dois gráficos lado a lado
+
+Pode modificar o código preservando a funcionalidade existente?"
+
+# PROMPT PARA OTIMIZAÇÃO:
+"Este código do meu app Shiny está lento quando o dataset 
+é grande. Como posso otimizar usando reactive() 
+adequadamente? [colar código]"
+```
+
+## Iterando com a IA
+
+::: incremental
+1.  **Primeira tentativa** - Peça o código básico
+2.  **Teste** - Execute e veja o que funciona
+3.  **Ajuste** - "O gráfico apareceu mas as cores estão erradas..."
+4.  **Refine** - "Agora adicione uma legenda..."
+5.  **Otimize** - "Como deixo este código mais eficiente?"
+6.  **Documente** - "Adicione comentários explicando cada seção"
+:::
+
+::: callout-tip
+## Dica importante
+
+Não espere código perfeito na primeira tentativa. Iteração é parte do processo!
+:::
+
+## Pedindo Explicações
+
+```{r}
+#| echo: true
+#| eval: false
+
+# PROMPT EXEMPLO:
+"Pode explicar este código linha por linha?
+[colar código]
+Especialmente não entendo o que reactive() está 
+fazendo e por que preciso usar parênteses quando 
+chamo dados_filtrados()"
+
+# PROMPT PARA CONCEITOS:
+"Não entendi a diferença entre reactive(), 
+observeEvent() e eventReactive(). 
+Pode explicar com exemplos práticos de quando 
+usar cada um?"
+
+# PROMPT PARA COMPARAÇÕES:
+"Qual a diferença entre renderPlot() e plotOutput()? 
+Quando uso cada um?"
+```
+
+## Verificando Código Gerado pela IA
+
+::: callout-warning
+## SEMPRE verifique o código da IA!
+:::
+
+**Checklist de verificação:**
+
+::: incremental
+-   ✅ O código roda sem erros?
+-   ✅ Os pacotes necessários estão carregados?
+-   ✅ As variáveis estão nomeadas corretamente?
+-   ✅ A lógica faz sentido para seu problema?
+-   ✅ O resultado está correto (valide com dados conhecidos)?
+-   ✅ O código é eficiente (não faz cálculos desnecessários)?
+-   ✅ O código é legível e bem organizado?
+:::
+
+## Limitações da IA para Programação
+
+::::: columns
+::: {.column width="50%"}
+**A IA pode:**
+
+-   Errar na sintaxe
+-   Sugerir funções obsoletas
+-   "Inventar" funções inexistentes
+-   Não considerar seu contexto específico
+-   Dar respostas plausíveis mas incorretas
+:::
+
+::: {.column width="50%"}
+**Você deve:**
+
+-   Entender os fundamentos
+-   Testar todo código
+-   Validar resultados
+-   Ler documentação oficial
+-   Usar pensamento crítico
+-   Iterar e ajustar
+:::
+:::::
+
+# 11. Boas Práticas {background-color="#2C3E50"}
+
+## Organização de Código no Shiny
+
+```{r}
+#| echo: true
+#| eval: false
+
+# ❌ EVITE: Tudo em um arquivo gigante
+
+# ✅ RECOMENDADO: Estrutura de pastas
+meu_app/
+  ├── app.R              # Arquivo principal
+  ├── global.R           # Variáveis globais, pacotes
+  ├── R/
+  │   ├── funcoes.R      # Funções customizadas
+  │   └── modulos.R      # Módulos Shiny
+  ├── data/
+  │   └── dados.csv      # Dados
+  ├── www/
+  │   ├── styles.css     # CSS customizado
+  │   └── logo.png       # Imagens
+  └── docs/
+      └── README.md      # Documentação
+```
+
+## Comentando seu Código
+
+```{r}
+#| echo: true
+#| eval: false
+
+# ❌ EVITE: Sem comentários ou comentários óbvios
+x <- input$n * 2  # Multiplica por 2
+
+# ✅ RECOMENDADO: Comentários que explicam o POR QUÊ
+# Dobrar o tamanho da amostra para aumentar precisão
+# do intervalo de confiança em dados com alta variância
+tamanho_amostra <- input$n * 2
+
+# Separar seções com comentários
+# ==== PROCESSAMENTO DE DADOS ====
+dados_filtrados <- reactive({
+  # Aplicar filtros selecionados pelo usuário
+  dados %>% 
+    filter(idade >= input$idade_min) %>% 
+    filter(cidade %in% input$cidades)
+})
+
+# ==== VISUALIZAÇÕES ====
+output$grafico <- renderPlot({
+  # Código do gráfico
+})
+```
+
+## Nomeação de Variáveis
+
+```{r}
+#| echo: true
+#| eval: false
+
+# ❌ EVITE: Nomes vagos ou crípticos
+x <- input$n1
+d <- filter(df, x > 10)
+plt <- ggplot(d, aes(a, b))
+
+# ✅ RECOMENDADO: Nomes descritivos
+tamanho_amostra <- input$num_observacoes
+dados_filtrados <- filter(dados_vendas, valor > 1000)
+grafico_vendas <- ggplot(dados_filtrados, 
+                          aes(x = mes, y = valor))
+
+# ✅ Use padrão consistente
+# Snake case (recomendado para R)
+dados_filtrados
+valor_total
+calcular_media_movel
+
+# Ou camelCase
+dadosFiltrados
+valorTotal
+calcularMediaMovel
+```
+
+## Tratamento de Erros
+
+```{r}
+#| echo: true
+#| eval: false
+
+server <- function(input, output) {
+  
+  # ✅ Validar inputs antes de usar
+  dados <- reactive({
+    req(input$arquivo)  # Requer arquivo
+    
+    # Validar formato
+    validate(
+      need(tools::file_ext(input$arquivo$name) == "csv",
+           "Por favor, envie um arquivo CSV")
+    )
+    
+    # Tentar ler com tratamento de erro
+    tryCatch({
+      read.csv(input$arquivo$datapath)
+    }, error = function(e) {
+      showNotification("Erro ao ler arquivo", type = "error")
+      return(NULL)
+    })
+  })
+  
+  # ✅ Validar dados antes de processar
+  output$resultado <- renderText({
+    req(dados())
+    validate(need(nrow(dados()) > 0, "Dataset vazio"))
+    
+    paste("Linhas:", nrow(dados()))
+  })
+}
+```
+
+## Performance: Evitando Recálculos
+
+```{r}
+#| echo: true
+#| eval: false
+
+# ❌ EVITE: Recalcular mesmos dados múltiplas vezes
+server <- function(input, output) {
+  
+  output$grafico1 <- renderPlot({
+    dados <- read.csv("dados.csv")  # Lê arquivo
+    dados <- filter(dados, x > input$valor)  # Filtra
+    ggplot(dados, aes(x, y)) + geom_point()
+  })
+  
+  output$grafico2 <- renderPlot({
+    dados <- read.csv("dados.csv")  # Lê NOVAMENTE
+    dados <- filter(dados, x > input$valor)  # Filtra NOVAMENTE
+    ggplot(dados, aes(x, z)) + geom_line()
+  })
+}
+
+# ✅ RECOMENDADO: Usar reactive()
+server <- function(input, output) {
+  
+  # Calcular UMA vez, usar MÚLTIPLAS vezes
+  dados_filtrados <- reactive({
+    dados <- read.csv("dados.csv")  # Lê uma vez
+    filter(dados, x > input$valor)  # Filtra uma vez
+  })
+  
+  output$grafico1 <- renderPlot({
+    ggplot(dados_filtrados(), aes(x, y)) + geom_point()
+  })
+  
+  output$grafico2 <- renderPlot({
+    ggplot(dados_filtrados(), aes(x, z)) + geom_line()
+  })
+}
+```
+
+## Performance: Otimizações
+
+```{r}
+#| echo: true
+#| eval: false
+
+# ✅ Carregar dados pesados no global.R
+# (executado UMA vez ao iniciar o app)
+
+# global.R
+dados_grandes <- read.csv("dados_grandes.csv")
+
+# ✅ Usar isolate() para evitar atualizações desnecessárias
+output$texto <- renderText({
+  # Atualiza só quando input$x muda
+  # input$y é lido mas não cria dependência
+  paste("X:", input$x, "Y:", isolate(input$y))
+})
+
+# ✅ Limitar precisão de sliders
+sliderInput("valor", "Valor:", 
+            min = 0, max = 100, value = 50,
+            step = 5)  # Menos atualizações
+
+# ✅ Usar debounce para inputs de texto
+valores <- reactive({
+  input$busca  # Atualiza enquanto digita
+}) %>% debounce(1000)  # Espera 1s após parar de digitar
+```
+
+## Segurança Básica
+
+```{r}
+#| echo: true
+#| eval: false
+
+# ❌ NUNCA coloque senhas no código
+password <- "minha_senha_secreta"  # PÉSSIMA IDEIA!
+
+# ✅ Use variáveis de ambiente
+password <- Sys.getenv("DB_PASSWORD")
+
+# ✅ Valide uploads de arquivo
+server <- function(input, output) {
+  dados <- reactive({
+    req(input$arquivo)
+    
+    # Verificar extensão
+    ext <- tools::file_ext(input$arquivo$name)
+    validate(need(ext %in% c("csv", "txt"), 
+                  "Apenas CSV ou TXT"))
+    
+    # Verificar tamanho (em bytes)
+    validate(need(input$arquivo$size < 10000000,
+                  "Arquivo muito grande (max 10MB)"))
+    
+    read.csv(input$arquivo$datapath)
+  })
+}
+
+# ✅ Sanitizar inputs de texto se forem usados em queries
+# (ao conectar com banco de dados)
+```
+
+# 12. Recursos e Próximos Passos {background-color="#2C3E50"}
+
+## Documentação Oficial
+
+::::: columns
+::: {.column width="50%"}
+**R Base e Pacotes:**
+
+-   [R Documentation](https://www.r-project.org/)
+-   [CRAN Task Views](https://cran.r-project.org/web/views/)
+-   [dplyr](https://dplyr.tidyverse.org/)
+-   [ggplot2](https://ggplot2.tidyverse.org/)
+:::
+
+::: {.column width="50%"}
+**Shiny:**
+
+-   [Shiny Oficial](https://shiny.posit.co/)
+-   [Shiny Cheatsheet](https://shiny.posit.co/r/articles/start/cheatsheet/)
+-   [Mastering Shiny (livro)](https://mastering-shiny.org/)
+-   [Shiny Gallery](https://shiny.posit.co/r/gallery/)
+:::
+:::::
+
+## Comunidades e Suporte
+
+**Onde buscar ajuda:**
+
+::: incremental
+-   [Stack Overflow](https://stackoverflow.com/questions/tagged/r) (tag: r, shiny)
+-   [RStudio Community](https://community.rstudio.com/)
+-   [Reddit r/rstats](https://www.reddit.com/r/rstats/)
+-   [R-Ladies](https://rladies.org/) (comunidades locais)
+-   [Posit Community](https://forum.posit.co/)
+:::
+
+**Dica:** Ao postar perguntas, use exemplos reproduzíveis (reprex)!
+
+## Tutoriais e Cursos
+
+**Gratuitos:**
+
+-   [R for Data Science (livro)](https://r4ds.hadley.nz/)
+-   [Shiny Tutorial](https://shiny.posit.co/r/getstarted/shiny-basics/lesson1/)
+-   [DataCamp Community](https://www.datacamp.com/community/tutorials)
+-   [R-Bloggers](https://www.r-bloggers.com/)
+
+**Intermediário/Avançado:**
+
+-   [Advanced R](http://adv-r.had.co.nz/)
+-   [Engineering Production-Grade Shiny Apps](https://engineering-shiny.org/)
+-   [Efficient R Programming](https://csgillespie.github.io/efficientR/)
+
+## Próximos Tópicos para Aprender
+
+::::: columns
+::: {.column width="50%"}
+**Após este curso:**
+
+-   Módulos Shiny (componentes reutilizáveis)
+-   ShinyDashboard (layouts profissionais)
+-   Conexão com bancos de dados
+-   Deploy de apps (shinyapps.io)
+-   Autenticação de usuários
+:::
+
+::: {.column width="50%"}
+**Expandindo conhecimentos:**
+
+-   R Markdown / Quarto
+-   Pacote development
+-   Testes automatizados
+-   Paralelização e performance
+-   Machine Learning com R
+:::
+:::::
+
+## Ferramentas de IA para R/Shiny
+
+**Assistentes de código:**
+
+-   ChatGPT / Claude / Gemini
+-   GitHub Copilot (integrado no IDE)
+
+**Dicas de uso:**
+
+::: incremental
+-   Use para gerar código base, não código final
+-   Sempre revise e teste o código gerado
+-   Aprenda com as soluções, não apenas copie
+-   Use para entender erros e debugar
+-   Peça explicações quando não entender
+:::
+
+## Desenvolvendo Autonomia
+
+::: callout-important
+## Lembre-se
+
+IA é uma ferramenta, não um substituto para aprendizado!
+:::
+
+**Para desenvolver autonomia:**
+
+::: incremental
+1.  **Leia código de outros** - GitHub, exemplos
+2.  **Escreva muito código** - prática deliberada
+3.  **Cometa erros** - aprenda debugando
+4.  **Ensine outros** - consolida conhecimento
+5.  **Itere constantemente** - refatore, melhore
+:::
+
+## Projeto Final Sugerido
+
+**Crie um app Shiny completo:**
+
+::: incremental
+1.  **Tenha uma ideia**
+    -   Veja exemplos se precisar de inspiração
+        -   https://shiny.posit.co/r/gallery/
+    -   Pense simples, e aumente complexidade se necessário
+2.  **Planeje funcionalidades:**
+    -   Upload de dados OU usar dados incluídos
+    -   Filtros interativos
+    -   Visualizações
+    -   Gerar tabelas
+    -   Download de resultados
+:::
+
+------------------------------------------------------------------------
+
+::: incremental
+3.  **Desenvolva iterativamente** com ajuda de IA
+    -   Tive essa ideia para um R shiny app: ... Vc acha viável?
+    -   Me ajude a estabelecer as característics
+4.  **Documente seu código**
+5.  **Teste com sua família ou colegas**
+6.  **Publique** (não obrigatório) (shinyapps.io, GitHub)
+:::
+
+# Desenvolva iterativamente com ajuda de IA {.scrollable}
+
+1.  CONTEXTO
+    -   Quem vai usar o app? (público alvo)
+    -   Qual o problema que resolve?
+2.  DADOS
+    -   De onde vêm os dados?
+    -   Qual a estrutura (colunas, tipos)?
+3.  FUNCIONALIDADES
+    -   Inputs: o que o usuário vai controlar?
+    -   Outputs: o que será mostrado?
+4.  LAYOUT
+    -   Como organizar a interface?
+        -   Tipo de interface: <sidebarLayout / navbarPage com abas / fluidPage simples>
+        -   Abas desejadas: \<ex.: "Sobre", "Dados", "Gráficos", "Relatórios"\>
+        -   Estilo: simples, limpo, adequado para uso em sala de aula.
+5.  ESPECIFICAÇÕES TÉCNICAS
+    -   Pacotes preferidos
+    -   Estilo visual
+    -   Validações necessárias
+
+# Conclusão {background-color="#2C3E50"}
+
+## Recapitulando
+
+**Você aprendeu:**
+
+::: incremental
+-   Fundamentos do R (tipos, estruturas, funções)
+-   Manipulação de dados com dplyr
+-   Visualização com ggplot2
+-   Estrutura e reatividade do Shiny
+-   Inputs, outputs e controle de fluxo
+-   Como usar IA efetivamente
+-   Boas práticas de programação
+:::
+
+## Lições-Chave
+
+::: callout-tip
+## Principais takeaways
+
+1.  **R + Shiny** permite criar aplicações web sem conhecer web development
+2.  **Reatividade** é automática, mas você pode controlá-la
+3.  **IA** acelera desenvolvimento, mas requer conhecimento base
+4.  **Prática** é essencial - código não se aprende só lendo
+5.  **Comunidade** R é grande e prestativa - use-a!
+:::
+
+## Próximos Passos
+
+::: callout-note
+## Recomendações
+
+1.  **Pratique imediatamente** - crie um app simples hoje
+2.  **Use IA como tutor** - peça explicações, não só código
+3.  **Leia código de outros** - GitHub está cheio de exemplos
+4.  **Compartilhe seu trabalho** - receba feedback
+5.  **Continue aprendendo** - R e Shiny evoluem constantemente
+:::
+
+## Contato e Recursos
+
+::::: columns
+::: {.column width="50%"}
+**Professor:**
+
+Prof. Djalma Barbosa
+
+Universidade Federal de Rondonópolis
+:::
+
+::: {.column width="50%"}
+**Materiais do curso:**
+
+-   Slides
+-   Código dos exemplos
+-   Datasets de prática
+-   Lista de recursos
+:::
+:::::
+
+##  {background-color="#2C3E50"}
+
+::: {style="text-align: center; margin-top: 200px;"}
+# Obrigado! {.r-fit-text}
+
+Bons estudos e bons códigos! 🚀
+
+Perguntas?
+:::
